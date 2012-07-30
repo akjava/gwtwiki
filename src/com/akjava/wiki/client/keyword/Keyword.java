@@ -56,6 +56,10 @@ public boolean equals(Object o) {
    return false;
   }
 
+public boolean isRelative(){
+	return url.startsWith("/");
+}
+
 public String toString() {
     return keyword+","+url;
   }

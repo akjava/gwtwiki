@@ -31,10 +31,10 @@ public class AlertConverter extends AbstractConverter{
 		String ret="<div";
 					ret+=" class='alert alert-"+type+"'";
 				ret+=">";
-				System.out.println("type:"+type);
+				//System.out.println("type:"+type);
 				//for next <p>
 				if(type.equals("info")){
-				System.out.println("doc-converter:"+docConverter);
+				//System.out.println("doc-converter:"+docConverter);
 				docConverter.addNodeConverterOption(LineFolderConverter.class, "<i class='icon-comment-alt'></i> ");
 				}
 		return ret;

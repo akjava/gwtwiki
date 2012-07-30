@@ -5,18 +5,23 @@
  */
 package com.akjava.wiki.client.keyword;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.SystemUtils;
+
+import com.akjava.gwt.bootstrapwiki.client.modules.IIcon;
 import com.akjava.wiki.client.core.Element;
 import com.akjava.wiki.client.core.Node;
 import com.akjava.wiki.client.modules.Alink;
+import com.akjava.wiki.client.modules.Bold;
 import com.akjava.wiki.client.modules.LineFolder;
 import com.akjava.wiki.client.modules.Popup;
 import com.akjava.wiki.client.modules.Text;
-import com.akjava.wiki.client.util.StringUtils;
-import com.akjava.wiki.client.util.SystemUtils;
 
 
 
@@ -26,24 +31,29 @@ import com.akjava.wiki.client.util.SystemUtils;
  */
 public class KeyWordUtils {
 
-    public static Keyword[] loadCsvKeyWord(String text){
-    List list=new Vector();
-   
-    	text=StringUtils.replace(text,"\r\n", "\n");
-    	text=StringUtils.replace(text,"\r", "\n");
- 
+    public static Keyword[] loadCsvKeyWord(Reader reader){
+    List<Keyword> list=new ArrayList<Keyword>();
+    String text;
+    try {
+        text = IOUtils.toString(reader);
         String line[]=text.split(SystemUtils.LINE_SEPARATOR);
         for(int i=0;i<line.length;i++){
             String word[]=line[i].split(",");
             if(word.length>1){
-                list.add(new Keyword(word[0],word[1]));
+            	Keyword key=new Keyword(word[0],word[1]);
+            	if(word.length>2){
+            		key.setIcon(word[2].trim());
+            	}
+                list.add(key);
             }
         }
-   
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
    
     Keyword[] keywords=(Keyword[])list.toArray(new Keyword[list.size()]);
-    
-    //Arrays.sort(keywords);
+    Arrays.sort(keywords);
     
     return keywords;
     }
@@ -77,13 +87,13 @@ public class KeyWordUtils {
                 while(remainText.length()>0){
                     boolean match=false;
                     FOR:for(int j=0;j<keywords.length;j++){
-                        if(!isIgnored(keywords[j],ignoreKeys,ignoreURL)  &&remainText.startsWith(keywords[j].getKeyword())){
+                        if(remainText.startsWith(keywords[j].getKeyword())){
                             //addNode
                             if(notMatchText.length()>0){
                                 line.addNode(new Text(notMatchText));
                             }
                             if(isPopup(keywords[j])){
-                                //currently limited support.
+                             //currently limited support.
                             line.addNode(new Popup(keywords[j].getKeyword(),keywords[j].getUrl().substring(1),null));
                                   
                             //}else if(isAmazon(keywords[j].getUrl())){
@@ -91,7 +101,22 @@ public class KeyWordUtils {
                                 
                             }else{
                             
-                            line.addNode(new Alink(keywords[j].getUrl(),keywords[j].getKeyword()));
+                            	if(keywords[j].getIcon()!=null){
+                            		IIcon icon=new IIcon(keywords[j].getIcon());
+                            		line.addNode(icon);
+                            	}	
+                            if(isIgnored(keywords[j],ignoreKeys,ignoreURL)){
+                            	Bold bold=new Bold();
+                            	bold.addAttribute(keywords[j].getKeyword());
+                            	line.addNode(bold);
+                            	
+                            	
+                            }else{
+                            	line.addNode(new Alink(keywords[j].getUrl(),keywords[j].getKeyword()));
+                            }
+                            //create icon
+                            	
+                            
                             }
                             notMatchText="";
                             remainText=remainText.substring(keywords[j].getKeyword().length());
