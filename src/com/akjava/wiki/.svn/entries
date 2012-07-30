@@ -1,0 +1,34 @@
+8
+
+dir
+3
+https://akjava-gwt-tools.googlecode.com/svn/trunk/gwt-wiki/src/com/akjava/wiki
+https://akjava-gwt-tools.googlecode.com/svn
+
+
+
+2008-09-12T02:09:24.246386Z
+3
+akxucker@gmail.com
+
+
+svn:special svn:externals svn:needs-lock
+
+Wiki.gwt.xml
+file
+
+
+
+
+2008-09-08T05:12:33.208000Z
+07b77ff968ffb5437b5a72fc78f2fda7
+2008-09-12T02:09:24.246386Z
+3
+akxucker@gmail.com
+
+client
+dir
+
+public
+dir
+

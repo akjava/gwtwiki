@@ -1,0 +1,107 @@
+/*
+ * Created on 2004/11/20
+ * Author aki@akjava.com
+ * License Apache2.0 or Common Public License
+ */
+package com.akjava.wiki.client.core;
+
+
+import com.akjava.wiki.client.modules.Alink;
+import com.akjava.wiki.client.modules.Bold;
+import com.akjava.wiki.client.modules.CodeCommand;
+import com.akjava.wiki.client.modules.LineFolder;
+import com.akjava.wiki.client.modules.LineSeparator;
+import com.akjava.wiki.client.modules.SimpleCommand;
+import com.akjava.wiki.client.modules.TagCommand;
+import com.akjava.wiki.client.modules.Text;
+import com.akjava.wiki.client.modules.Topic;
+import com.akjava.wiki.client.parser.ALinkStringParser;
+import com.akjava.wiki.client.parser.BoldStringParser;
+import com.akjava.wiki.client.parser.CodeCommandParser;
+import com.akjava.wiki.client.parser.SimpleCommandParser;
+import com.akjava.wiki.client.parser.TagCommandParser;
+import com.akjava.wiki.client.parser.TextStringParser;
+import com.akjava.wiki.client.parser.TopicParser;
+import com.akjava.wiki.client.util.SystemUtils;
+
+/**
+ * 
+ *
+ */
+public class TextDocumentConverter implements Converter{
+
+    public String convert(Document document){
+        String result="";
+        for(int i=0;i<document.countNode();i++){
+            result+=convert(document.getNodeAt(i),true);
+        }
+        
+        //chomp
+        if(result.endsWith(SystemUtils.LINE_SEPARATOR)){
+            result=result.substring(0,result.length()-SystemUtils.LINE_SEPARATOR.length());
+        }
+        
+        return result;
+    }
+    
+    public String convert(Node node,boolean bool){
+        String result="";
+        
+        if(node instanceof Text){
+            result+=TextStringParser.toText(node);
+        }
+        else if(node instanceof LineSeparator){
+          
+            result+=SystemUtils.LINE_SEPARATOR;
+        }else if(node instanceof Alink){
+            
+            result+=ALinkStringParser.toText(node);
+            
+        }else if(node instanceof Bold){
+            result+=BoldStringParser.toText(node);
+            
+        }else if(node instanceof LineFolder){
+            //
+        }
+        else{
+            
+        
+        if(node instanceof Topic){
+            result+=TopicParser.toText(node);
+            
+        }else if(node instanceof SimpleCommand){
+            result+=SimpleCommandParser.toText(node);
+        } else if(node instanceof CodeCommand){
+            result+=CodeCommandParser.toText(node);
+        	}else if(node instanceof TagCommand){
+                result+=TagCommandParser.toText(node);
+        	}
+        //addLine
+        result+=SystemUtils.LINE_SEPARATOR;
+        }
+        
+        
+        if(node instanceof Element && bool){
+          Element element=(Element)node;
+        for(int i=0;i<element.countNode();i++){
+           
+            result+=convert(element.getNodeAt(i),true);
+            
+               
+            }
+            //last element not add line separator.
+           
+        }
+        
+        
+        if(node instanceof LineFolder){
+            //throw new RuntimeException("lins");
+            result+=SystemUtils.LINE_SEPARATOR;
+        }
+        
+        return result;
+    }
+    
+    
+
+}
