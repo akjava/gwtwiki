@@ -31,9 +31,14 @@ public boolean canConvert(Node node){
 
 public String toHeader(Node node){
     String result="";
-    result+="<pre>";
-   // String attributes[]=((CodeCommand)node).getAttributes();
-    
+    result+="<pre";
+    String attributes[]=((CodeCommand)node).getAttributes();
+    if(attributes.length>0){
+    	result+=" class='prettyprint "+ attributes[0]+"'";
+    }else{
+    	//result+=" check";
+    }
+    result+=">";
     
     
     return result;

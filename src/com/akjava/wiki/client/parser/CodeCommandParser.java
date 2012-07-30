@@ -43,6 +43,10 @@ public class CodeCommandParser implements LineParser{
         CodeCommand code=new CodeCommand();
         code.setParent(element);
         element.addNode(code);
+        String attributes[]=this.getAttributes(line);
+        for(int i=0;i<attributes.length;i++){
+            code.addAttribute(attributes[i]);
+        }
         return code;
     }
     
@@ -55,6 +59,22 @@ public class CodeCommandParser implements LineParser{
         return result;
         }else{
             return null;
+        }
+    }
+    //TODO move AbstractCommandParser?
+    public String[] getAttributes(String line){
+        int index=line.indexOf("(");
+        if(index==-1){
+            return new String[0];
+        }else{
+            int last=line.lastIndexOf(")");
+            if(last==-1){
+                last=line.length();
+                System.out.println("forget )");
+            }
+            //Math.max(last,);//for forget );
+            String ats=line.substring(index+1,last);
+            return ats.split(",");
         }
     }
 }
