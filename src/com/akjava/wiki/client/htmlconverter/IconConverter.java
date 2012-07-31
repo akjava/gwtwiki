@@ -25,7 +25,7 @@ public boolean canConvert(Node node){
 public String toHeader(Node node){
     String result="";
     if(iconHost==null){
-    result+="<p><img src='/"+iconDir+"'/";
+    result+="<p><img src='/"+iconDir+"/";
     }else{
     	 result+="<p><img src='"+iconHost+"/"+iconDir+"/";
     }

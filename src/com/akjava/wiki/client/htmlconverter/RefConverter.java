@@ -58,7 +58,7 @@ public String toHeader(Node node){
     if(attributes.length>0){
     	for(int i=0;i<baseHosts.size();i++){
     		if(attributes[0].startsWith(baseHosts.get(i).getStartName())){
-    			attributes[0]=baseHosts.get(i).getBaseHost()+attributes[i];
+    			attributes[0]=baseHosts.get(i).getBaseHost()+attributes[0];
     			break;
     		}
     	}
