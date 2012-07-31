@@ -65,13 +65,16 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
     public BootstrapHtmlDocumentConverter(){
         super();
     	if(!initialized){
-        	DefaultParsers.lineParsers.add(0, new DivCommandParser());
-            DefaultParsers.stringParsers.add(0, new IIconStringParser());
-            DefaultParsers.stringParsers.add(0, new BLabelStringParser());
-            DefaultParsers.lineParsers.add(0, new AlertCommandParser());
-            DefaultParsers.stringParsers.add(0, new CodeStringParser());
+        	initializeParsers();
         	initialized=true;
         }
+    }
+    public void initializeParsers(){
+    	DefaultParsers.lineParsers.add(0, new DivCommandParser());
+        DefaultParsers.stringParsers.add(0, new IIconStringParser());
+        DefaultParsers.stringParsers.add(0, new BLabelStringParser());
+        DefaultParsers.lineParsers.add(0, new AlertCommandParser());
+        DefaultParsers.stringParsers.add(0, new CodeStringParser());
     }
     
     

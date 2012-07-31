@@ -1,11 +1,18 @@
 package com.akjava.wiki.client.ecs;
 
+/**
+ * 
+ * sadly there are not apache ecs
+ * 
+ */
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class A {
 private String rel;
 private String href;
-private List<Object> elements;
+private List<Object> elements=new ArrayList<Object>();;
 public String getRel() {
 	return rel;
 }

@@ -24,15 +24,23 @@ public boolean canConvert(Node node){
     return (node instanceof SimpleCommand) && ((SimpleCommand)node).getName().equals("commons1");
 	}
 public String toHeader(Node node){
+	
     String result="";
     result+=new Comment("クリエイティブ・コモンズ・ライセンス").toString();
-    A a=new A().setRel("license").setHref("http://creativecommons.org/licenses/by/2.1/jp/")
+   
+   
+    A a=new A();
+    
+    a.setRel("license").setHref("http://creativecommons.org/licenses/by/2.1/jp/")
     .addElement(new IMG().setAlt("クリエイティブ・コモンズ・ライセンス").setBorder(0).setSrc("http://creativecommons.org/images/public/somerights2.gif"));
+    
     result+=a.toString();
     result+="<br>";
+    
     result+="このworkは、"+new A().setRel("license").setHref("http://creativecommons.org/licenses/by/2.1/jp/")
     .addElement("クリエイティブ・コモンズ・ライセンス").toString();
     result+="の下でライセンスされています。";
+
     
     result+=new Comment("/クリエイティブ・コモンズ・ライセンス").toString();
 

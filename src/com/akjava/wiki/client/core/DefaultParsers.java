@@ -43,7 +43,7 @@ static{
     lineParsers.add(new CodeCommandParser());
     lineParsers.add(new TextCommandParser());
     
-    lineParsers.add(new TangoCommandParser());
+    //lineParsers.add(new TangoCommandParser());
     
     
     //command
