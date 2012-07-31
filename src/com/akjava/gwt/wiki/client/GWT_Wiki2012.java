@@ -3,6 +3,7 @@ package com.akjava.gwt.wiki.client;
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.wiki.client.ui.AlertInput;
+import com.akjava.gwt.wiki.client.ui.AnchorInput;
 import com.akjava.gwt.wiki.client.ui.LabelInput;
 import com.akjava.wiki.client.core.RootDocument;
 import com.akjava.wiki.client.core.StringLineDocumentBuilder;
@@ -146,6 +147,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 					untag();
 				}
 			});
+	        buttons.add(new AnchorInput(target));
 	        buttons.add(untagBt);
 	        
 	        
@@ -263,6 +265,17 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    private void untag(){
 	    	TextSelection selection=getTextSelection();
 	    	String selectText=selection.getSelection();
+	    	if(selectText.startsWith("''")){
+	    		int end=selectText.indexOf("''",2);
+	    		if(end!=-1){
+	    			String contain=selectText.substring(2,end);
+		    		String remain=selectText.substring(end+2);
+		    		selection.replace(contain+remain);
+		    		
+		    		selection.setCursorPos(selection.getStart());
+	    		}
+	    	}else{
+	    	
 	    	String tag=TagUtil.getTag(selectText);
 	    	if(tag!=null){
 	    		String contain=TagUtil.getContain(tag);
@@ -271,6 +284,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    		selection.replace(contain+remain);
 	    		
 	    		selection.setCursorPos(selection.getStart());
+	    	}
 	    	}
 	    }
 	    
