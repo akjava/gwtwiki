@@ -5,19 +5,22 @@
  */
 package com.akjava.gwt.bootstrapwiki.client;
 
-import java.util.List;
 import java.util.Vector;
 
 import com.akjava.gwt.bootstrapwiki.client.modules.AlertCommandParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.AlertConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BLabelConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BLabelStringParser;
+import com.akjava.gwt.bootstrapwiki.client.modules.BtnConverter;
+import com.akjava.gwt.bootstrapwiki.client.modules.BtnStringParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.CodeConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.CodeStringParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.DivClassConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.DivCommandParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.IIconConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.IIconStringParser;
+import com.akjava.gwt.bootstrapwiki.client.modules.SmallConverter;
+import com.akjava.gwt.bootstrapwiki.client.modules.SmallStringParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.TitleConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.TopicToHeroConverter;
 import com.akjava.wiki.client.core.AbstractDocumentConverter;
@@ -75,6 +78,8 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         DefaultParsers.stringParsers.add(0, new BLabelStringParser());
         DefaultParsers.lineParsers.add(0, new AlertCommandParser());
         DefaultParsers.stringParsers.add(0, new CodeStringParser());
+        DefaultParsers.stringParsers.add(0, new SmallStringParser());
+        DefaultParsers.stringParsers.add(0, new BtnStringParser());
     }
     
     
@@ -176,11 +181,8 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
     }
 
 
-	@Override
-	protected void initializeConverters() {
-	
-       list=new Vector();
-        
+    protected void addConverter(){
+
         list.add(new TopicToHeroConverter());
         list.add(new AmazonConverter());
         list.add(new LineFolderConverter());
@@ -214,7 +216,15 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         list.add(0,new CodeConverter());
         list.add(0,new TitleConverter());
         
-
+        list.add(0,new SmallConverter());
+        list.add(0,new BtnConverter());
+    }
+    
+	@Override
+	protected void initializeConverters() {
+	
+       list=new Vector();
+        addConverter();
         /** Never insert here.BootstrapHtmlDocumentConverter calls so much.
          *     DefaultParsers.lineParsers.add(0, new DivCommandParser());
     			DefaultParsers.stringParsers.add(0, new IIconStringParser());

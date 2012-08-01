@@ -20,7 +20,11 @@ public String[] getAttributes(){
 }
 
 public String getAttributeAt(int index){
+	if(attributes.size()>index){
     return (String)attributes.get(index);
+	}else{
+		return null;
+	}
 }
 
 public void setAttributeAt(String value,int index){

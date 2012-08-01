@@ -152,9 +152,30 @@ public static String getContain(String tag){
     }
 }
 
+/*
+public static int  pmode=0;
+public static Map<String,String> getAttribute(String tag){
+    Map<String,String> map=new HashMap<String,String>();
+    String another=getAnother(tag);
+    String[] ps=another.split("\\s+");
+    String key;
+    String value;
+    for(String v:ps){
+    	if(!v.isEmpty()){
+    		
+    	}
+    }
+    return map;
+}
+private static boolean typeEquals(String t){
+	return t.equals("=");
+}
+*/
+public static int SINGLE_QUOTE=3;
 public static int QUOTE=1;
 public static int KEY=0;
 public static int VALUE=2;
+//BUGS cant get multiply single value
 public static Map getAttribute(String tag){
     Map map=new HashMap();
     if(tag.startsWith("<")){
