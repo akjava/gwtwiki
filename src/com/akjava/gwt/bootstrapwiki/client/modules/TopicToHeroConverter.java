@@ -43,7 +43,11 @@ public String toHeader(Node node){
     result+="<h";
     result+=getLevel(node);
     result+=">";
-    result+=toTitle(getTitle(node));
+    String content=toTitle(getTitle(node));
+    if(content.isEmpty()){
+    	return "";//for search engine
+    }
+    result+=content;
     result+="</h"+getLevel(node)+">\r\n";
     
     return result;

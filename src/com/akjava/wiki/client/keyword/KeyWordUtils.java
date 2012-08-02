@@ -45,7 +45,15 @@ public class KeyWordUtils {
             		key.setIcon(word[2].trim());
             	}
                 list.add(key);
+            }else if(word.length==1){
+            	String w=word[0];
+            	if(!w.startsWith("<") && !w.isEmpty()){//ignore tag & empty
+            		Keyword key=new Keyword(w,"");
+            		 list.add(key);
+            	}
+            	
             }
+            
         }
     } catch (IOException e) {
         // TODO Auto-generated catch block
@@ -105,7 +113,7 @@ public class KeyWordUtils {
                             		IIcon icon=new IIcon(keywords[j].getIcon());
                             		line.addNode(icon);
                             	}	
-                            if(isIgnored(keywords[j],ignoreKeys,ignoreURL)){
+                            if(isIgnored(keywords[j],ignoreKeys,ignoreURL) || keywords[j].getUrl().isEmpty()){
                             	Bold bold=new Bold();
                             	bold.addAttribute(keywords[j].getKeyword());
                             	line.addNode(bold);
