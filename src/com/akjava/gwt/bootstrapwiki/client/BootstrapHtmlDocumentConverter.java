@@ -41,6 +41,7 @@ import com.akjava.wiki.client.htmlconverter.ListCommandConverter;
 import com.akjava.wiki.client.htmlconverter.PlainTextConverter;
 import com.akjava.wiki.client.htmlconverter.PopupConverter;
 import com.akjava.wiki.client.htmlconverter.RefConverter;
+import com.akjava.wiki.client.htmlconverter.RefConverter.BaseHost;
 import com.akjava.wiki.client.htmlconverter.SplitCommandConverter;
 import com.akjava.wiki.client.htmlconverter.TagCommandConverter;
 import com.akjava.wiki.client.htmlconverter.TextConverter;
@@ -184,7 +185,10 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
     protected void addConverter(){
 
         list.add(new TopicToHeroConverter());
-        list.add(new AmazonConverter());
+        AmazonConverter amazon= new AmazonConverter();
+        list.add(amazon);
+        amazon.setUserId("akishomepag-22");
+        
         list.add(new LineFolderConverter());
         list.add(new PlainTextConverter());
         list.add(new TextConverter());
@@ -195,8 +199,15 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         list.add(new AlinkConverter());
         list.add(new BoldConverter());
         list.add(new CodeCommandConverter());
-        list.add(new RefConverter());
-        list.add(new IconConverter());
+        
+        RefConverter ref=new RefConverter();
+        ref.addBaseHost(new BaseHost("/img2/", "http://www2.akjava.com"));
+        ref.addBaseHost(new BaseHost("/img3/", "http://www3.akjava.com"));
+        list.add(ref);
+        
+        IconConverter icon=new IconConverter();
+        icon.setIconHost("http://www2.akjava.com");
+        list.add(icon);
         list.add(new CreativeCommonsConverter());
         list.add(new PopupConverter());
         list.add(new DownloadConverter());

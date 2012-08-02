@@ -1,9 +1,13 @@
 package com.akjava.gwt.wiki.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.wiki.client.ui.AlertInput;
 import com.akjava.gwt.wiki.client.ui.AnchorInput;
+import com.akjava.gwt.wiki.client.ui.BtnInput;
 import com.akjava.gwt.wiki.client.ui.LabelInput;
 import com.akjava.wiki.client.core.RootDocument;
 import com.akjava.wiki.client.core.StringLineDocumentBuilder;
@@ -44,6 +48,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  private TextArea textArea;
 	  private TextArea textHtmlArea;
 	  private ScrollPanel htmlFolder;
+	  
+	  private int historyIndex;
+	  private List<String> textHistory=new ArrayList<String>();
 	  /**
 	     * This is the entry point method.
 	     */
@@ -52,7 +59,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	       
 	    }
 	    public void editData(){
-
+	    	
 	  	  HorizontalPanel trueRoot=new HorizontalPanel();
 	  	  trueRoot.setSpacing(16);
 	  	
@@ -139,6 +146,49 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        buttons.add(insertTextButton("#title(",")"));
 	        buttons.add(insertTextButton("#code\n",""));
 	       
+	        buttons.add(new AnchorInput(target));
+	        
+	       
+	        
+	        
+	        HorizontalPanel buttons2=new HorizontalPanel();
+	        verticalPanel.add(buttons2);
+	        
+	        Button smallBt=new Button("small");
+	        smallBt.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					insertBetweenSelectionText("<small>","</small>");
+				}
+			});
+	        buttons2.add(smallBt);
+	        
+	        Button escape=new Button("&escape");
+	        escape.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					escape();
+				}
+
+				private void escape() {
+					TextSelection selection=getTextSelection();
+			    	String selectText=selection.getSelection();
+			    	selectText=selectText.replace("&", "&amp;");
+			    	selectText=selectText.replace("<", "&lt;");
+			    	selectText=selectText.replace(">", "&gt;");
+			    	
+			    	selection.replace(selectText);
+		    		
+		    		selection.setCursorPos(selection.getStart());
+		    		
+			    	
+				}
+			});
+	        buttons2.add(escape);
+	        buttons2.add(new BtnInput(target));
+	        
 	        Button untagBt=new Button("untag");
 	        untagBt.addClickHandler(new ClickHandler() {
 				
@@ -147,9 +197,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 					untag();
 				}
 			});
-	        buttons.add(new AnchorInput(target));
-	        buttons.add(untagBt);
-	        
+	       
+	        buttons2.add(untagBt);
 	        
 	        textArea = new TextArea();
 	        
@@ -197,14 +246,42 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        tabPanel.selectTab(0);
 	        trueRoot.add(tabPanel);
 	        
-	        verticalPanel.add(new Button("Clear", new ClickHandler() {
+	        HorizontalPanel bottomButtons=new HorizontalPanel();
+	        verticalPanel.add(bottomButtons);
+	        bottomButtons.add(new Button("Clear", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					textArea.setText("");
 					doWiki();
 				}
 			}));
+	        bottomButtons.add(new Button("Undo", new ClickHandler() {//TODO better
+				@Override
+				public void onClick(ClickEvent event) {
+					String text=textHistory.get(historyIndex);
+					textArea.setText(text);
+					historyIndex--;
+					if(historyIndex<0){
+						historyIndex=0;
+					}
+				}
+			}));
+	        bottomButtons.add(new Button("Redo", new ClickHandler() {
+				@Override
+				public void onClick(ClickEvent event) {
+					if(historyIndex<textHistory.size()){
+						String text=textHistory.get(historyIndex);
+						textArea.setText(text);
+						historyIndex++;
+						if(historyIndex>=textHistory.size()){
+							historyIndex=textHistory.size()-1;
+						}
+					}
+				}
+			}));
 	        
+	        
+	      
 	        
 	        
 	       
@@ -220,6 +297,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        if(historyText!=null){
 	        	textArea.setText(historyText);
 	        }
+	        
+	        addHistory(textArea.getText());
 	    }
 	    
 	    
@@ -297,7 +376,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					TextSelection selection=getTextSelection();
-					String before=selection.getSelectionBefore()+header;
+					String before=selection.getSelectionBefore()+header+selection.getSelection();
 					selection.setText(before+footer+selection.getSelectionAfter());
 					selection.setCursorPos(before.length());
 				}
@@ -330,7 +409,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  		//GWT.log(""+pos+":"+textArea.getText(), null);
 	  		String h=textArea.getText().substring(0,pos);
 	  		String f=textArea.getText().substring(pos+textArea.getSelectionLength());
-	  		textArea.setText(h+header+realSelect+footer+f);
+	  		
+	  		setTextArea(textArea, h+header+realSelect+footer+f);
+	  		
 	  		textArea.setCursorPos((h+header+realSelect).length());
 	  		textArea.setFocus(true);
 	    }
@@ -396,7 +477,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 				return textArea.getText().substring(end);
 			}
 			public void setText(String text){
-				targetTextArea.setText(text);
+				setTextArea(targetTextArea,text);
+				
 			}
 			public void setFocus(){
 				targetTextArea.setFocus(true);
@@ -405,5 +487,18 @@ public class GWT_Wiki2012 implements EntryPoint {
 				targetTextArea.setCursorPos(pos);
 			}
 			
+	    }
+	    
+	    public void setTextArea(TextArea targetTextArea,String text){
+	    	targetTextArea.setText(text);
+			addHistory(text);
+	    }
+	    
+	    public void addHistory(String text){
+	    	textHistory.add(text);
+	    	if(textHistory.size()>1000){
+	    		textHistory.remove(0);
+	    	}
+	    	historyIndex=textHistory.size()-1;
 	    }
 }
