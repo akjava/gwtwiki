@@ -142,6 +142,7 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         String html=StringUtils.replace(footerText,"${title}",title);
         html=StringUtils.replace(html,"${title}",toSmallTitle(title));
         if(baseXdocPath!=null){
+        	System.out.println(baseXdocPath+","+document.getDocumentPath());
         	html=StringUtils.replace(html,"${path}",toXucker(document.getDocumentPath()));
         }
         return html;
@@ -201,8 +202,8 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         list.add(new CodeCommandConverter());
         
         RefConverter ref=new RefConverter();
-        ref.addBaseHost(new BaseHost("/img2/", "http://www2.akjava.com"));
-        ref.addBaseHost(new BaseHost("/img3/", "http://www3.akjava.com"));
+        ref.addBaseHost(new BaseHost("/img/", "http://www2.akjava.com"));
+        ref.addBaseHost(new BaseHost("/img2/", "http://www3.akjava.com"));
         list.add(ref);
         
         IconConverter icon=new IconConverter();

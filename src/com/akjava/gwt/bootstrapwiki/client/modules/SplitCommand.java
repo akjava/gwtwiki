@@ -81,7 +81,7 @@ public class SplitCommand extends ElementImp implements LineContainer{
 	private void parse(List<String> tmpLines){
 		 RootDocument root;
 		try {
-			root = StringLineDocumentBuilder.createDocument(tmpLines.toArray(new String[tmpLines.size()]));
+			root = StringLineDocumentBuilder.createDocument(tmpLines.toArray(new String[tmpLines.size()]),"");
 			 StringLineDocumentBuilder.replace(root, this);
 		} catch (WikiException e) {
 			// TODO Auto-generated catch block

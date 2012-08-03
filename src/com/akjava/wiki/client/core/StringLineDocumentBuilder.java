@@ -18,6 +18,8 @@ import com.akjava.wiki.client.util.StringUtils;
  */
 public class StringLineDocumentBuilder {
 
+
+	
 	public static boolean debug;
 	 public static boolean isDebug() {
 		return debug;
@@ -29,8 +31,8 @@ public class StringLineDocumentBuilder {
 
 	public RootDocument createDocument(String path,String texts) throws WikiException{
 		  String lines[]=splitLine(texts,false);
-		  RootDocument document=createDocument(lines);
-	      document.addAttribute(path);
+		  RootDocument document=createDocument(lines,path);
+	      //document.addAttribute(path);
 	       return document;
 	 }
 	
@@ -63,13 +65,15 @@ public class StringLineDocumentBuilder {
     
 
     
+	 /*
     public RootDocument createDocument(String text) throws WikiException{
         return createDocument(splitLine(text,false));
     }
-    public RootDocument createDocument(List<String> lines) throws WikiException{
-        return createDocument((String[])lines.toArray(new String[lines.size()]));
+    */
+    public RootDocument createDocument(List<String> lines,String path) throws WikiException{
+        return createDocument((String[])lines.toArray(new String[lines.size()]),path);
     }
-    public static RootDocument createDocument(String[] lines) throws WikiException{
+    public static RootDocument createDocument(String[] lines,String path) throws WikiException{
     	if(debug){
     	System.out.println("[lineParsers]");
     	for(LineParser lineParser:DefaultParsers.lineParsers){
@@ -83,6 +87,8 @@ public class StringLineDocumentBuilder {
     	
     	
         RootDocument document=new RootDocument();
+        document.addAttribute(path);
+        
         Element element=document;
         for(int i=0;i<lines.length;i++){
            element=element.breakUp(element,lines[i]);

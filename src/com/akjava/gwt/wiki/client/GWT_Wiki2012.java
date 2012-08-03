@@ -105,7 +105,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void insertAndCursorCenter(String header, String footer) {
 					TextSelection selection=getTextSelection();
-					String before=selection.getSelectionBefore()+header;
+					String before=selection.getSelectionBefore()+header+selection.getSelection();
 					selection.setText(before+footer+selection.getSelectionAfter());
 					selection.setCursorPos(before.length());
 				}
@@ -251,7 +251,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        bottomButtons.add(new Button("Clear", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					textArea.setText("");
+					setTextArea(textArea,"");
+					
 					doWiki();
 				}
 			}));

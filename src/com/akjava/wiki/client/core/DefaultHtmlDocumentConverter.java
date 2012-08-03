@@ -34,7 +34,7 @@ import com.akjava.wiki.client.util.StringUtils;
 
 /**
  * 
- *
+ *@deprecated dont use for create now
  */
 public class DefaultHtmlDocumentConverter extends AbstractDocumentConverter{
 
