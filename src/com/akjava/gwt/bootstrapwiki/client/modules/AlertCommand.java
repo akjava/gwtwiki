@@ -23,7 +23,7 @@ public class AlertCommand extends ElementImp{
    
     
     public Element breakUp(Element element,String line){
-        if(line.startsWith("#") || line.startsWith("*")){
+        if(line.startsWith("#text") || line.startsWith("*")){
             return element.getParent();
         }
         return element;

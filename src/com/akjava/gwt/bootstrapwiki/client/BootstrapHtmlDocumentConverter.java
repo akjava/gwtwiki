@@ -19,6 +19,8 @@ import com.akjava.gwt.bootstrapwiki.client.modules.DivClassConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.DivCommandParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.IIconConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.IIconStringParser;
+import com.akjava.gwt.bootstrapwiki.client.modules.ProgressCommandConverter;
+import com.akjava.gwt.bootstrapwiki.client.modules.ProgressCommandParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.SmallConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.SmallStringParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.TitleConverter;
@@ -36,6 +38,7 @@ import com.akjava.wiki.client.htmlconverter.CreativeCommonsConverter;
 import com.akjava.wiki.client.htmlconverter.DownloadConverter;
 import com.akjava.wiki.client.htmlconverter.IFrameConverter;
 import com.akjava.wiki.client.htmlconverter.IconConverter;
+import com.akjava.wiki.client.htmlconverter.ImgConverter;
 import com.akjava.wiki.client.htmlconverter.LineFolderConverter;
 import com.akjava.wiki.client.htmlconverter.LineSeparatorConverter;
 import com.akjava.wiki.client.htmlconverter.ListCommandConverter;
@@ -63,8 +66,8 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
     }
     
     private static boolean initialized;
-    
-    /**
+
+	/**
      * add DefaultParsers too
      */
     public BootstrapHtmlDocumentConverter(){
@@ -79,9 +82,12 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         DefaultParsers.stringParsers.add(0, new IIconStringParser());
         DefaultParsers.stringParsers.add(0, new BLabelStringParser());
         DefaultParsers.lineParsers.add(0, new AlertCommandParser());
+        DefaultParsers.lineParsers.add(0, new ProgressCommandParser());
+        
         DefaultParsers.stringParsers.add(0, new CodeStringParser());
         DefaultParsers.stringParsers.add(0, new SmallStringParser());
         DefaultParsers.stringParsers.add(0, new BtnStringParser());
+
     }
     
     
@@ -223,7 +229,7 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         list.add(new DivClassConverter());
        list.add(new AnchorConverter());
         //list.add(new DivConverter());
-       // list.add(new ImgConverter());
+        list.add(new ImgConverter());
         list.add(0,new IIconConverter());
         list.add(0,new BLabelConverter());
         list.add(0,new AlertConverter());
@@ -232,6 +238,7 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         
         list.add(0,new SmallConverter());
         list.add(0,new BtnConverter());
+        list.add(0,new ProgressCommandConverter());
     }
     
 	@Override

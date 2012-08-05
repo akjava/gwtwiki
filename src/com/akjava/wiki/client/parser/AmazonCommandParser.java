@@ -29,7 +29,7 @@ public class AmazonCommandParser extends SimpleCommandParser{
          AmazonCommand command=new AmazonCommand();
          command.setName(this.getCommandName(line));
          element.addNode(command);
-         String attributes[]=this.getAttributes(line);
+         String attributes[]=this.parseAttributes(line);
          for(int i=0;i<attributes.length;i++){
              command.addAttribute(attributes[i]);
          }

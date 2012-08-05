@@ -30,7 +30,7 @@ public class IFrameParser extends SimpleCommandParser{
          IFrame command=new IFrame();
          command.setName(this.getCommandName(line));
          element.addNode(command);
-         String attributes[]=this.getAttributes(line);
+         String attributes[]=this.parseAttributes(line);
          for(int i=0;i<attributes.length;i++){
              command.addAttribute(attributes[i]);
          }

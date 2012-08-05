@@ -37,7 +37,14 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
     protected abstract void initializeConverters();
     protected List<NodeConverter> list;
     
-    
+    private boolean debug;
+    public boolean isDebug() {
+		return debug;
+	}
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+	
     public String convert(Document document){
     	
     	
@@ -48,6 +55,14 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
         if(list==null){
         	throw new RuntimeException("list must be initialized");
         }
+        
+        if(debug){
+        	System.out.println("[converter]");
+        	for(NodeConverter coverter:list){
+        		System.out.println(coverter);
+        	}
+        }
+        
         
         startAction(document);
         String result="";

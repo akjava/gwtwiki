@@ -13,7 +13,7 @@ import com.akjava.wiki.client.core.LineParser;
  *
  */
 public abstract class AbstractCommandParser implements LineParser{
-private boolean isCommand(String line){
+protected boolean isCommand(String line){
     return line.startsWith("#") && !line.startsWith("##");
 }
 public String getCommandName(String line){
@@ -23,7 +23,7 @@ public String getCommandName(String line){
     }
     return line.substring(1,index);
 }
-public String[] getAttributes(String line){
+public String[] parseAttributes(String line){
     int index=line.indexOf("(");
     if(index==-1){
         return new String[0];

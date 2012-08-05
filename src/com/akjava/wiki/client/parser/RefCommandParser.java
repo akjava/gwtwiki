@@ -30,7 +30,7 @@ public class RefCommandParser extends SimpleCommandParser{
          RefCommand command=new RefCommand();
          command.setName(this.getCommandName(line));
          element.addNode(command);
-         String attributes[]=this.getAttributes(line);
+         String attributes[]=this.parseAttributes(line);
          for(int i=0;i<attributes.length;i++){
              command.addAttribute(attributes[i]);
          }
