@@ -40,6 +40,7 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
     
     public String convert(Document document){
     	
+    	
         if(list==null){
         	initializeConverters();
         }
@@ -52,6 +53,7 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
         String result="";
         result+=getHeader(document);
         for(int i=0;i<document.countNode();i++){
+        	
             result+=convert(document.getNodeAt(i),true);
         }
         
@@ -72,6 +74,7 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
     if(nodeConverters!=null){
         for(int i=0;i<nodeConverters.length;i++){
             if(nodeConverters[i].canConvert(node)){
+
             	nodeConverters[i].setDocumentConverter(this);
             	
             	
@@ -89,6 +92,7 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
     
     if(node instanceof Element && parseChildren){
         Element element=(Element)node;
+        
          for(int i=0;i<element.countNode();i++){
         	NodeConverter converter=findParentConverter(element);
         	 if(converter==null){

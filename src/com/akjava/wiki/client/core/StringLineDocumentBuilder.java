@@ -19,7 +19,7 @@ import com.akjava.wiki.client.util.StringUtils;
 public class StringLineDocumentBuilder {
 
 
-	
+
 	public static boolean debug;
 	 public static boolean isDebug() {
 		return debug;
@@ -29,14 +29,16 @@ public class StringLineDocumentBuilder {
 		debug = d;
 	}
 
-	public RootDocument createDocument(String path,String texts) throws WikiException{
+	/*
+	public RootDocument createDocument(Path path,String texts) throws WikiException{
 		  String lines[]=splitLine(texts,false);
-		  RootDocument document=createDocument(lines,path);
+		  RootDocument document=createDocument(lines,path!=null?path.getPath():"");
 	      //document.addAttribute(path);
 	       return document;
 	 }
+	 */
 	
-	 public String[] splitLine(String text,boolean bool){
+	 public static String[] splitLine(String text){
 		text=StringUtils.replace(text,"\r\n", "\n");
 		text=StringUtils.replace(text,"\r", "\n");
 		return text.split("\n");
@@ -91,8 +93,10 @@ public class StringLineDocumentBuilder {
         
         Element element=document;
         for(int i=0;i<lines.length;i++){
+       // 	System.out.println(i+","+lines[i]);
            element=element.breakUp(element,lines[i]);
            LineParser[] parsers=element.getLineParses();
+           
            boolean doParse=false;
            PARSER:for(int j=0;j<parsers.length;j++){
                if(parsers[j].canParse(lines[i])){

@@ -29,6 +29,7 @@ import com.akjava.wiki.client.core.Document;
 import com.akjava.wiki.client.core.NodeConverter;
 import com.akjava.wiki.client.htmlconverter.AlinkConverter;
 import com.akjava.wiki.client.htmlconverter.AmazonConverter;
+import com.akjava.wiki.client.htmlconverter.AnchorConverter;
 import com.akjava.wiki.client.htmlconverter.BoldConverter;
 import com.akjava.wiki.client.htmlconverter.CodeCommandConverter;
 import com.akjava.wiki.client.htmlconverter.CreativeCommonsConverter;
@@ -142,7 +143,7 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         String html=StringUtils.replace(footerText,"${title}",title);
         html=StringUtils.replace(html,"${title}",toSmallTitle(title));
         if(baseXdocPath!=null){
-        	System.out.println(baseXdocPath+","+document.getDocumentPath());
+        	//System.out.println(baseXdocPath+","+document.getDocumentPath());
         	html=StringUtils.replace(html,"${path}",toXucker(document.getDocumentPath()));
         }
         return html;
@@ -220,6 +221,7 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         
         list.add(new SplitCommandConverter());
         list.add(new DivClassConverter());
+       list.add(new AnchorConverter());
         //list.add(new DivConverter());
        // list.add(new ImgConverter());
         list.add(0,new IIconConverter());

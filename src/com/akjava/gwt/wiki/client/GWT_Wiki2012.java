@@ -309,7 +309,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  	 
 	     	  RootDocument document;
 			try {
-				document = builder.createDocument("/test.html", textArea.getText());
+				document = builder.createDocument(StringLineDocumentBuilder.splitLine(textArea.getText()),"/test.html");
 				String headerText="";
 		     	  String footerText="";
 		     	 BootstrapHtmlDocumentConverter converter=new BootstrapHtmlDocumentConverter();
