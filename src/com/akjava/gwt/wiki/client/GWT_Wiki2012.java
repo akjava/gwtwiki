@@ -259,12 +259,18 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        bottomButtons.add(new Button("Undo", new ClickHandler() {//TODO better
 				@Override
 				public void onClick(ClickEvent event) {
+					
+					
+						
 					String text=textHistory.get(historyIndex);
+					GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 					textArea.setText(text);
+					lastHistory=text;
 					historyIndex--;
 					if(historyIndex<0){
 						historyIndex=0;
 					}
+					
 				}
 			}));
 	        bottomButtons.add(new Button("Redo", new ClickHandler() {
@@ -272,7 +278,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 				public void onClick(ClickEvent event) {
 					if(historyIndex<textHistory.size()){
 						String text=textHistory.get(historyIndex);
+						GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 						textArea.setText(text);
+						lastHistory=text;
 						historyIndex++;
 						if(historyIndex>=textHistory.size()){
 							historyIndex=textHistory.size()-1;
@@ -304,6 +312,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    
 	    
+	    private String lastWik;
 	    public void doWiki(){
 	  	  StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
 	  	 
@@ -325,7 +334,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 		           Keyword[] keywords={gwt};
 		          // KeyWordUtils.insertKeyword(document,keywords,null,new String[]{""});
 		           String result= converter.convert(document);
-		           GWT.log(result, null);
+		          // GWT.log(result, null);
 		          
 		           //htmlLabel.removeFromParent();
 		           htmlLabel.setHTML(result);
@@ -333,6 +342,10 @@ public class GWT_Wiki2012 implements EntryPoint {
 		        
 		          // htmlFolder.add(htmlLabel);
 		           textHtmlArea.setText(result);
+		           if(!result.equals(lastWik)){
+		        	   addHistory(textArea.getText());
+		        	   lastWik=result;
+		           }
 			} catch (WikiException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -495,8 +508,14 @@ public class GWT_Wiki2012 implements EntryPoint {
 			addHistory(text);
 	    }
 	    
+	    private String lastHistory;
 	    public void addHistory(String text){
+	    	if(text.equals(lastHistory)){
+	    		return;
+	    	}
 	    	textHistory.add(text);
+	    	lastHistory=text;
+	    	GWT.log("add history:"+text);
 	    	if(textHistory.size()>1000){
 	    		textHistory.remove(0);
 	    	}
