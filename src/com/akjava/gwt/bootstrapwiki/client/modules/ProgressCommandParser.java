@@ -54,7 +54,7 @@ public class ProgressCommandParser extends AbstractCommandParser{
     
     public boolean isWidthText(String text){
     	for(int i=0;i<text.length();i++){
-    		if(!Character.isDefined(text.charAt(i))){
+    		if(!Character.isDigit(text.charAt(i))){
     			return false;
     		}
     	}

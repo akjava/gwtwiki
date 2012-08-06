@@ -22,6 +22,9 @@ public class AlertCommand extends ElementImp{
 
    
     
+    /**
+     * only topic and text
+     */
     public Element breakUp(Element element,String line){
         if(line.startsWith("#text") || line.startsWith("*")){
             return element.getParent();

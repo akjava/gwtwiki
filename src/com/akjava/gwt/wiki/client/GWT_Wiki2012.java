@@ -9,6 +9,8 @@ import com.akjava.gwt.wiki.client.ui.AlertInput;
 import com.akjava.gwt.wiki.client.ui.AnchorInput;
 import com.akjava.gwt.wiki.client.ui.BtnInput;
 import com.akjava.gwt.wiki.client.ui.LabelInput;
+import com.akjava.gwt.wiki.client.ui.ProgressInput;
+import com.akjava.gwt.wiki.client.ui.TemplatePanel;
 import com.akjava.wiki.client.core.RootDocument;
 import com.akjava.wiki.client.core.StringLineDocumentBuilder;
 import com.akjava.wiki.client.core.WikiException;
@@ -94,7 +96,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        TextInsertTarget target=new TextInsertTarget() {
 				@Override
 				public void insertText(String text) {
-					
+					insertBetweenSelectionText(text,"");
 				}
 
 				@Override
@@ -198,6 +200,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 				}
 			});
 	       
+	        buttons2.add(new ProgressInput(target));
+	        
 	        buttons2.add(untagBt);
 	        
 	        textArea = new TextArea();
@@ -238,6 +242,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	  	  tabPanel.add(htmlFolder,"renderd-html");
 	  	
+	  	  
+	  	  tabPanel.add(new TemplatePanel(),"template");
+	  	  
 	       
 	        textHtmlArea = new TextArea();
 	        //textHtmlArea.setWidth("300px");

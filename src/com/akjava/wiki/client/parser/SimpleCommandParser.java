@@ -33,7 +33,7 @@ public class SimpleCommandParser extends AbstractCommandParser{
      * @see org.jpn.xucker.wiki.LineParser#parse(org.jpn.xucker.wiki.Element, java.lang.String)
      */
     public Element parse(Element element, String line) {
-    	System.out.println("simple command try parse:"+line);
+    	
         
         SimpleCommand command=new SimpleCommand();
         command.setName(this.getCommandName(line));
@@ -41,7 +41,6 @@ public class SimpleCommandParser extends AbstractCommandParser{
         String attributes[]=this.parseAttributes(line);
         for(int i=0;i<attributes.length;i++){
             command.addAttribute(attributes[i]);
-            System.out.println("attr:"+attributes[i]);
         }
         
         return element;

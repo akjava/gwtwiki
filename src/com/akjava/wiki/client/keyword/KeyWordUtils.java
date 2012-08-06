@@ -26,7 +26,7 @@ import com.akjava.wiki.client.modules.Text;
 
 
 /**
- * 
+ * TODO remove apache
  *
  */
 public class KeyWordUtils {
