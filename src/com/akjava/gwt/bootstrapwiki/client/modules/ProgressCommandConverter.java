@@ -50,10 +50,10 @@ public String toHeader(Node node){
     		(type.isEmpty()?"":" "+type)+
     		(color.isEmpty()?"":" "+color)+"'"+
     		(width.isEmpty()?"":" style='width:"+width+";'")+
-    		">";
-    result+="<div class='bar' style='width:"+persent+";'></div>";
+    		">"+(isPretty()?LINE_SEPARATOR:"");
+    result+="<div class='bar' style='width:"+persent+";'></div>"+(isPretty()?LINE_SEPARATOR:"");
     	
-    result+="</div>";
+    result+="</div>"+(isPretty()?LINE_SEPARATOR:"");
     return result;
 	}
 

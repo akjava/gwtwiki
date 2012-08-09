@@ -1,5 +1,7 @@
 package com.akjava.gwt.bootstrapwiki.client.modules;
 
+import org.apache.commons.beanutils.Converter;
+
 import com.akjava.wiki.client.core.Node;
 import com.akjava.wiki.client.htmlconverter.AbstractConverter;
 import com.akjava.wiki.client.htmlconverter.LineFolderConverter;
@@ -21,8 +23,7 @@ public class AlertConverter extends AbstractConverter{
 
 	@Override
 	public String toFooter(Node node) {
-		// TODO Auto-generated method stub
-		return "</div>";
+		return "</div>"+(isPretty()?LINE_SEPARATOR:"");
 	}
 
 	@Override
@@ -31,6 +32,12 @@ public class AlertConverter extends AbstractConverter{
 		String ret="<div";
 					ret+=" class='alert alert-"+type+"'";
 				ret+=">";
+				if(isPretty()){
+					ret+=LINE_SEPARATOR;
+				}
+				
+				
+				
 				//System.out.println("type:"+type);
 				//for next <p>
 				if(type.equals("info")){

@@ -21,7 +21,7 @@ public class DivClassConverter extends AbstractConverter{
 	@Override
 	public String toFooter(Node node) {
 		// TODO Auto-generated method stub
-		return "</div>";
+		return "</div>"+(isPretty()?LINE_SEPARATOR:"");
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class DivClassConverter extends AbstractConverter{
 				if(node.getAttributes().length>0){
 					ret+=" class='"+node.getAttributes()[0]+"'";
 				}
-				ret+=">";
+				ret+=">"+(isPretty()?LINE_SEPARATOR:"");
 		return ret;
 	}
 

@@ -30,7 +30,7 @@ public class LineFolderConverter extends AbstractConverter{
 		}
 
 	public String toFooter(Node node){
-	    return "</p>";
+	    return "</p>"+(isPretty()?LINE_SEPARATOR:"");
 	}
 
 }

@@ -22,7 +22,7 @@ public boolean canConvert(Node node){
 
 public String toHeader(Node node){
     String result="";
-    result+="<br>";
+    result+="<br>"+(isPretty()?LINE_SEPARATOR:"");
     return result;
 	}
 

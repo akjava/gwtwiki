@@ -33,5 +33,20 @@ public abstract class AbstractConverter implements NodeConverter{
 		this.docConverter=docConverter;
 	}
   
+	public boolean isPretty(){
+		Object obj=docConverter.getParameter("pretty");
+		System.out.println("obj:"+obj+","+docConverter.getClass().getName());
+		if(obj!=null){
+			try{
+				return (Boolean)obj;
+			}catch (Exception e) {
+			
+			}
+			return false;
+		}else{
+			return false;
+		}
+	}
+	public static String LINE_SEPARATOR="\r\n";
     
 }

@@ -127,6 +127,11 @@ public class DescriptionConverter implements DocumentConverter{
         
         return result;
     }
+	@Override
+	public Object getParameter(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
 

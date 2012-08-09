@@ -65,6 +65,12 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
     	baseXdocPath=path;
     }
     
+    public void setPrettyPrint(boolean bool){
+    	parameters.put("pretty", bool);
+
+    	//System.out.println(getParameter("pretty"));
+    }
+    
     private static boolean initialized;
 
 	/**

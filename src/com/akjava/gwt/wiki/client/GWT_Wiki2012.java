@@ -26,6 +26,7 @@ import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FormHandler;
 import com.google.gwt.user.client.ui.FormPanel;
@@ -34,6 +35,7 @@ import com.google.gwt.user.client.ui.FormSubmitEvent;
 import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TabPanel;
@@ -146,8 +148,8 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        buttons.add(insertTextButton("#text\n",""));
 	        buttons.add(insertTextButton("#title(",")"));
-	        buttons.add(insertTextButton("#code\n",""));
-	       
+	        buttons.add(insertTextButton("#code\n","\n#text"));
+	        buttons.add(insertTextButton("#tag\n","\n#text"));
 	        buttons.add(new AnchorInput(target));
 	        
 	       
@@ -208,7 +210,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        textArea.setName("textArea");
 	        textArea.setStylePrimaryName("textbg");
-	  	  textArea.setWidth("550px");
+	  	  textArea.setWidth("560px");
 	        textArea.setHeight("700px");
 	        textArea.addChangeHandler(new ChangeHandler() {
 				
@@ -296,7 +298,18 @@ public class GWT_Wiki2012 implements EntryPoint {
 				}
 			}));
 	        
+	        autoWiki = new CheckBox();
+	        bottomButtons.add(autoWiki);
+	        autoWiki.setValue(true);
+	        bottomButtons.add(new Label("Auto wiki"));
 	        
+	        bottomButtons.add(new Button("Manual Wiki",new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					execWiki();
+				}
+			}));
 	      
 	        
 	        
@@ -321,6 +334,13 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    private String lastWik;
 	    public void doWiki(){
+	    	if(!autoWiki.getValue()){
+	    		return;
+	    	}else{
+	    		execWiki();
+	    	}
+	    }
+	    public void execWiki(){
 	  	  StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
 	  	 
 	     	  RootDocument document;
@@ -516,6 +536,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    }
 	    
 	    private String lastHistory;
+		private CheckBox autoWiki;
 	    public void addHistory(String text){
 	    	if(text.equals(lastHistory)){
 	    		return;

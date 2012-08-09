@@ -38,7 +38,7 @@ public String toHeader(Node node){
     }
     
     if(getLevel(node)==2 && !getTitle(node).isEmpty()){
-    	result+="<div class='hero-unit'>";
+    	result+="<div class='hero-unit'>"+(isPretty()?LINE_SEPARATOR:"");
     }
     result+="<h";
     result+=getLevel(node);
@@ -76,7 +76,7 @@ private int getLevel(Node node){
 public String toFooter(Node node){
    //return "";
 	 if(getLevel(node)==2 && !getTitle(node).isEmpty()){
-	return "</div>";
+	return "</div>"+(isPretty()?LINE_SEPARATOR:"");
 	 }else{
 		 return "";
 	 }

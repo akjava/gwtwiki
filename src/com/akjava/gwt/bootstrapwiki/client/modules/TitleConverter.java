@@ -41,6 +41,6 @@ public String toHeader(Node node){
     return result;
 	}
 public String toFooter(Node node){
-    return "</div>";
+    return "</div>"+(isPretty()?LINE_SEPARATOR:"");
 }
 }

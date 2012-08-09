@@ -22,6 +22,12 @@ public abstract class AbstractDocumentConverter implements DocumentConverter{
 			String option) {
 		optionMap.put(target, option);
 	}
+    
+    protected Map<String,Object> parameters=new HashMap<String, Object>();
+    public Object getParameter(String key){
+    	return parameters.get(key);
+    }
+    
 	public NodeConverter[] getNodeConverters() {
         return nodeConverters;
     }

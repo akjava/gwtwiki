@@ -15,4 +15,5 @@ public String convert(Document document);
 public String convert(Node element,boolean parseChildren);
 
 public void addNodeConverterOption(Class target,String option);
+public Object getParameter(String key);
 }
