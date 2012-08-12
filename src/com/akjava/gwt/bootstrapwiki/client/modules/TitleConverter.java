@@ -24,7 +24,7 @@ public boolean canConvert(Node node){
 public String toHeader(Node node){
     String result="";
     
-    result+="<div class=\"page-header\">"+"<h2>";
+    result+=(isPretty()?LINE_SEPARATOR:"")+"<div class=\"page-header\">"+"<h2>";
    
     String attributes[]=((SimpleCommand)node).getAttributes();
     if(attributes.length>0){

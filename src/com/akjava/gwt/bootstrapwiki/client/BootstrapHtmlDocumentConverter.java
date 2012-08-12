@@ -11,6 +11,7 @@ import com.akjava.gwt.bootstrapwiki.client.modules.AlertCommandParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.AlertConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BLabelConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BLabelStringParser;
+import com.akjava.gwt.bootstrapwiki.client.modules.BootstrapIconConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BtnConverter;
 import com.akjava.gwt.bootstrapwiki.client.modules.BtnStringParser;
 import com.akjava.gwt.bootstrapwiki.client.modules.CodeConverter;
@@ -215,12 +216,19 @@ public class BootstrapHtmlDocumentConverter extends AbstractDocumentConverter{
         list.add(new CodeCommandConverter());
         
         RefConverter ref=new RefConverter();
-        ref.addBaseHost(new BaseHost("/img/", "http://www2.akjava.com"));
-        ref.addBaseHost(new BaseHost("/img2/", "http://www3.akjava.com"));
+        ref.addBaseHost(new BaseHost("/img/", "http://www.akjava.com"));
+        //ref.addBaseHost(new BaseHost("/img2/", "http://www3.akjava.com"));
+        ref.addBaseHost(new BaseHost("/img2/", "http://www.akjava.com"));
         list.add(ref);
         
+        
+        /**
         IconConverter icon=new IconConverter();
-        icon.setIconHost("http://www2.akjava.com");
+        icon.setIconHost("http://www.akjava.com");
+        **/
+        
+        BootstrapIconConverter icon=new BootstrapIconConverter();
+        
         list.add(icon);
         list.add(new CreativeCommonsConverter());
         list.add(new PopupConverter());

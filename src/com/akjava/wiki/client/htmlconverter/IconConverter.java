@@ -11,7 +11,7 @@ import com.akjava.wiki.client.modules.SimpleCommand;
 
 /**
  * 
- *
+ *@deprecated replaced
  */
 public class IconConverter extends AbstractConverter{
 

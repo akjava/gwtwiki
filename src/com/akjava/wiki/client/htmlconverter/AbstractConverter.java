@@ -35,7 +35,7 @@ public abstract class AbstractConverter implements NodeConverter{
   
 	public boolean isPretty(){
 		Object obj=docConverter.getParameter("pretty");
-		System.out.println("obj:"+obj+","+docConverter.getClass().getName());
+		
 		if(obj!=null){
 			try{
 				return (Boolean)obj;

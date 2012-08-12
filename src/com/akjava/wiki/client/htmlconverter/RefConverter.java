@@ -72,8 +72,8 @@ public String toHeader(Node node){
 public String toFooter(Node node){
     String attributes[]=((SimpleCommand)node).getAttributes();
     if(attributes.length>1){
-        return "</a></p>";
+        return "</a></p>"+(isPretty()?LINE_SEPARATOR:"");
     }
-    return "</p>";
+    return "</p>"+(isPretty()?LINE_SEPARATOR:"");
 }
 }

@@ -351,6 +351,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 		     	 BootstrapHtmlDocumentConverter converter=new BootstrapHtmlDocumentConverter();
 		           converter.setHeaderText(headerText);
 		           converter.setFooterText(footerText);
+		           converter.setPrettyPrint(true);
 		           
 		         //  converter.setIconHost("http://www.xucker.jpn.org");
 		        //   converter.setImageHost("http://www.xucker.jpn.org");
