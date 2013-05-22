@@ -71,9 +71,14 @@ public class GWT_Wiki2012 implements EntryPoint {
 	 // private String outputTextHiddenId;
 	//  private String outputHtmlHiddenId;
 	  
+	  public static final String PEOPERTY_SESSION_ID="wiki2012sessionid";
+	  
 	  public static final String PEOPERTY_DEFAULT_ID="wiki2012defaultid";
 	  public static final String PEOPERTY_OUTPUT_TEXT="wiki2012outputtext";
 	  public static final String PEOPERTY_OUTPUT_HTML="wiki2012outputhtml";
+	  
+	  public static final String KEY_SESSION="wiki2012session_value";//for session storage
+	  public static final String KEY_LAST_SESSION_ID="wiki2012session_last_session_id";
 	  /**
 	     * This is the entry point method.
 	     */
@@ -391,9 +396,34 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        //load default value from input
 	       // if(!defaultValueInputId.isEmpty()){
-	        String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
-	        textArea.setText(data);
+	       
+	        String session_id=ValueUtils.getFormValueById(PEOPERTY_SESSION_ID,"");
+	        if(!session_id.isEmpty()){
+	        	try {
+	        		String lastSessionId = storageControler.getValue(KEY_LAST_SESSION_ID, "");
+	        		if(session_id!=lastSessionId){
+	        			//new situation
+	        			String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
+	    		        textArea.setText(data);
+	    		        storageControler.setValue(KEY_LAST_SESSION_ID, session_id);//mark used
+	        		}else{
+	        			String lastModified=storageControler.getValue(KEY_SESSION, "");
+	        			textArea.setText(lastModified);
+	        		}
+				} catch (StorageException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	
+	        }else{
+	        	String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
+		        textArea.setText(data);
+	        }
+	       
+	        
 	        //}
+	        
+	        
 	        
 	        
 	        /*
@@ -444,6 +474,13 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	if(!outputHtmlHiddenId.isEmpty()){
 	    		RootPanel.get(outputHtmlHiddenId).getElement().setAttribute("value", html);
 	    	}*/
+	    		
+	    		try {
+					storageControler.setValue(KEY_SESSION, textArea.getText());
+				} catch (StorageException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	    }
 	    
 	    public String convertWikiToHtml(){
@@ -494,12 +531,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	           }
 	     	  
 	     	  
-			try {
-				storageControler.setValue("history", textArea.getText());
-			} catch (StorageException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 	  	  
 	    }
 	    private void untag(){
