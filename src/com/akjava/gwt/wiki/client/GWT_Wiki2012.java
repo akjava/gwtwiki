@@ -71,6 +71,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	 // private String outputTextHiddenId;
 	//  private String outputHtmlHiddenId;
 	  
+	  public static final String PEOPERTY_READ_ONLY="wiki2012readonly";
 	  public static final String PEOPERTY_SESSION_ID="wiki2012sessionid";
 	  
 	  public static final String PEOPERTY_DEFAULT_ID="wiki2012defaultid";
@@ -95,12 +96,19 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  	  editData();
 	       
 	    }
+	    private boolean readOnly;
 	    public void editData(){
 	    	
+	      RootPanel panel=RootPanel.get(PEOPERTY_READ_ONLY);
+	      if(panel!=null){
+	    	  readOnly=true;
+	      }
 	  	  HorizontalPanel trueRoot=new HorizontalPanel();
 	  	  trueRoot.setSpacing(16);
 	  	
 	  	  final FormPanel formPanel=new FormPanel();
+	  	  	
+	  	  
 	        VerticalPanel verticalPanel=new VerticalPanel();
 	        formPanel.setWidget(verticalPanel);
 	        formPanel.setMethod("post");
@@ -128,6 +136,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 
 	        
 	        HorizontalPanel buttons=new HorizontalPanel();
+	        if(readOnly){
+	        	buttons.setVisible(false);
+	        }
 	        TextInsertTarget target=new TextInsertTarget() {
 				@Override
 				public void insertText(String text) {
@@ -210,6 +221,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        
 	        HorizontalPanel buttons2=new HorizontalPanel();
+	        if(readOnly){
+	        	buttons2.setVisible(false);
+	        }
 	        verticalPanel.add(buttons2);
 	        
 	        Button smallBt=new Button("small");
@@ -261,6 +275,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        buttons2.add(untagBt);
 	        
 	        textArea = new TextArea();
+	        if(readOnly){
+	        	textArea.setEnabled(false);
+	        }
 	        
 	        textArea.setName("textArea");
 	        textArea.setStylePrimaryName("textbg");
@@ -295,9 +312,13 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        verticalPanel.add(textArea);
 	        
 	        TabPanel tabPanel = new TabPanel();
-	       
 	        
-	        tabPanel.getDeckPanel().setHeight("700px");
+	       
+	        if(readOnly){
+	        	tabPanel.getDeckPanel().setHeight("670px");	
+	        }else{
+	        tabPanel.getDeckPanel().setHeight("730px");
+	        }
 	        tabPanel.getDeckPanel().setWidth("960px");
 	       
 	        htmlLabel = new HTML();
@@ -309,9 +330,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	  	  tabPanel.add(htmlFolder,"renderd-html");
 	  	
-	  	  
+	  	  if(!readOnly){
 	  	  tabPanel.add(new TemplatePanel(),"template");
-	  	  
+	  	  }
 	       
 	        textHtmlArea = new TextArea();
 	        //textHtmlArea.setWidth("300px");
@@ -321,6 +342,9 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        trueRoot.add(tabPanel);
 	        
 	        HorizontalPanel bottomButtons=new HorizontalPanel();
+	        if(readOnly){
+	        	bottomButtons.setVisible(false);
+	  	  	}
 	        verticalPanel.add(bottomButtons);
 	        bottomButtons.add(new Button("Clear", new ClickHandler() {
 				@Override
