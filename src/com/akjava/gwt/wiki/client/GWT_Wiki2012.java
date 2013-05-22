@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
+import com.akjava.gwt.lib.client.GWTHTMLUtils;
 import com.akjava.gwt.lib.client.GWTUtils;
 import com.akjava.gwt.lib.client.IStorageControler;
+import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.lib.client.StorageException;
 import com.akjava.gwt.lib.client.ValueUtils;
@@ -28,6 +30,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
@@ -71,10 +74,13 @@ public class GWT_Wiki2012 implements EntryPoint {
 	     * This is the entry point method.
 	     */
 	    public void onModuleLoad() {
-	     //parse from html	
+	     //parse from html
+	    	LogUtils.log("onModuleLoad");
 	    	defaultValueInputId=ValueUtils.getFormValueById("wiki2012defaultid", "");
 	    	outputTextHiddenId=ValueUtils.getFormValueById("wiki2012outputtext", "");
 	    	outputHtmlHiddenId=ValueUtils.getFormValueById("wiki2012outputhtml", "");
+	    	
+	    	LogUtils.log("inited:"+defaultValueInputId+","+outputTextHiddenId+","+outputHtmlHiddenId);
 	  	  editData();
 	       
 	    }
@@ -232,8 +238,12 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        textArea.addKeyUpHandler(new KeyUpHandler() {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
+					if(event.getNativeKeyCode()==KeyCodes.KEY_ENTER){
+					doWiki();	
+					}else{
 					convertWikiToHtml();//not need?
 					syncOutput();
+					}
 				}
 			});
 	        textArea.addChangeHandler(new ChangeHandler() {
@@ -351,7 +361,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	      // trueRoot.add(frame);
 	       tabPanel.add(frame,"Help");
 	      
-	        RootPanel.get("wiki2012").add(trueRoot);
+	       GWTHTMLUtils.getPanelIfExist("gwtwikicontainer").add(trueRoot);
 	        
 	        //load default value from input
 	        if(!defaultValueInputId.isEmpty()){
