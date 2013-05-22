@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
+import com.akjava.gwt.lib.client.GWTUtils;
 import com.akjava.gwt.lib.client.IStorageControler;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.lib.client.StorageException;
+import com.akjava.gwt.lib.client.ValueUtils;
+import com.akjava.gwt.lib.client.widget.cell.util.WidgetUtils;
 import com.akjava.gwt.wiki.client.ui.AlertInput;
 import com.akjava.gwt.wiki.client.ui.AnchorInput;
 import com.akjava.gwt.wiki.client.ui.BtnInput;
@@ -20,10 +23,13 @@ import com.akjava.wiki.client.keyword.Keyword;
 import com.akjava.wiki.client.util.TagUtil;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.TextAreaElement;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.Window;
@@ -57,10 +63,18 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  
 	  private int historyIndex;
 	  private List<String> textHistory=new ArrayList<String>();
+	  
+	  private String defaultValueInputId;
+	  private String outputTextHiddenId;
+	  private String outputHtmlHiddenId;
 	  /**
 	     * This is the entry point method.
 	     */
 	    public void onModuleLoad() {
+	     //parse from html	
+	    	defaultValueInputId=ValueUtils.getFormValueById("wiki2012defaultid", "");
+	    	outputTextHiddenId=ValueUtils.getFormValueById("wiki2012outputtext", "");
+	    	outputHtmlHiddenId=ValueUtils.getFormValueById("wiki2012outputhtml", "");
 	  	  editData();
 	       
 	    }
@@ -208,12 +222,20 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        buttons2.add(untagBt);
 	        
+	        GWT.log("input:"+outputTextHiddenId);
 	        textArea = new TextArea();
 	        
 	        textArea.setName("textArea");
 	        textArea.setStylePrimaryName("textbg");
-	  	  textArea.setWidth("560px");
+	  	    textArea.setWidth("560px");
 	        textArea.setHeight("700px");
+	        textArea.addKeyUpHandler(new KeyUpHandler() {
+				@Override
+				public void onKeyUp(KeyUpEvent event) {
+					convertWikiToHtml();//not need?
+					syncOutput();
+				}
+			});
 	        textArea.addChangeHandler(new ChangeHandler() {
 				
 				@Override
@@ -325,12 +347,21 @@ public class GWT_Wiki2012 implements EntryPoint {
 	       
 	       Frame frame=new Frame("manual.html");
 	      
-	       frame.setHeight("580px");
-	       trueRoot.add(frame);
-	       
-	        RootPanel.get().add(trueRoot);
-	        String data=RootPanel.get("text").getElement().getAttribute("value");
+	       frame.setHeight("640x");
+	      // trueRoot.add(frame);
+	       tabPanel.add(frame,"Help");
+	      
+	        RootPanel.get("wiki2012").add(trueRoot);
+	        
+	        //load default value from input
+	        if(!defaultValueInputId.isEmpty()){
+	        String data=ValueUtils.getFormValueById(defaultValueInputId, "");
 	        textArea.setText(data);
+	        }
+	        
+	        
+	        /*
+	         * ignore auto resume
 	        String historyText=null;
 			try {
 				historyText = storageControler.getValue("history", null);
@@ -341,8 +372,10 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        if(historyText!=null){
 	        	textArea.setText(historyText);
 	        }
+	        */
 	        
 	        addHistory(textArea.getText());
+	        syncOutput();
 	    }
 	    
 	    
@@ -354,10 +387,23 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	}else{
 	    		execWiki();
 	    	}
+	    	syncOutput();
 	    }
-	    public void execWiki(){
-	  	  StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
-	  	 
+	    
+	    public void syncOutput(){
+	    	String text=textArea.getText();
+	    	String html=textHtmlArea.getText();
+	    	if(!outputTextHiddenId.isEmpty()){
+	    		RootPanel.get(outputTextHiddenId).getElement().setAttribute("value", text);
+	    	}
+	    	if(!outputHtmlHiddenId.isEmpty()){
+	    		RootPanel.get(outputHtmlHiddenId).getElement().setAttribute("value", html);
+	    	}
+	    }
+	    
+	    public String convertWikiToHtml(){
+	    	StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
+		  	 
 	     	  RootDocument document;
 			try {
 				document = builder.createDocument(StringLineDocumentBuilder.splitLine(textArea.getText()),"/test.html");
@@ -378,21 +424,29 @@ public class GWT_Wiki2012 implements EntryPoint {
 		          // KeyWordUtils.insertKeyword(document,keywords,null,new String[]{""});
 		           String result= converter.convert(document);
 		          // GWT.log(result, null);
+		           return result;
 		          
 		           //htmlLabel.removeFromParent();
-		           htmlLabel.setHTML(result);
-		           
-		        
-		          // htmlFolder.add(htmlLabel);
-		           textHtmlArea.setText(result);
-		           if(!result.equals(lastWik)){
-		        	   addHistory(textArea.getText());
-		        	   lastWik=result;
-		           }
+		          
 			} catch (WikiException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return null;
 			}
+	    }
+	    
+	    public void execWiki(){
+	    	String result=convertWikiToHtml();
+	    	
+	    	 htmlLabel.setHTML(result);
+	           
+		        
+	          // htmlFolder.add(htmlLabel);
+	           textHtmlArea.setText(result);
+	           if(!result.equals(lastWik)){
+	        	   addHistory(textArea.getText());
+	        	   lastWik=result;
+	           }
 	     	  
 	     	  
 			try {
