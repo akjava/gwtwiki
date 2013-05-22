@@ -1,3 +1,13 @@
 This is some test app
 create html by wiki like text with gwt-bootstrap
 
+
+IDs
+create input text or hidden for integrate normal html form.
+
+wiki2012defaultid - for default text value
+wiki2012outputtext - for output text value
+wiki2012outputhtml  - for output converted html value
+
+example 
+see test_form.html
