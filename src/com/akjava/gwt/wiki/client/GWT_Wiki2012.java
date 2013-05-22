@@ -136,6 +136,27 @@ public class GWT_Wiki2012 implements EntryPoint {
 					selection.setCursorPos(before.length());
 				}
 			};
+			
+			  TextInsertTarget justInsertTarget=new TextInsertTarget() {
+					@Override
+					public void insertText(String header) {
+						TextSelection selection=getTextSelection();
+						String before=selection.getSelectionBefore()+header+selection.getSelection();
+						selection.setText(before+selection.getSelectionAfter());
+						selection.setCursorPos(before.length()+header.length());
+					}
+
+					@Override
+					public void tagText(String header, String footer) {
+						LogUtils.log("not supported");
+					}
+
+					@Override
+					public void insertAndCursorCenter(String header, String footer) {
+						LogUtils.log("not supported");
+					}
+				};
+				
 	        LabelInput labelInput=new LabelInput(target);
 	        buttons.add(labelInput);
 	        
@@ -224,7 +245,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				}
 			});
 	       
-	        buttons2.add(new ProgressInput(target));
+	        buttons2.add(new ProgressInput(justInsertTarget));
 	        
 	        buttons2.add(untagBt);
 	        
