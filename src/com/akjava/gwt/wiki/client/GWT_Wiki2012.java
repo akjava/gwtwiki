@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
+import com.akjava.gwt.lib.client.IStorageControler;
 import com.akjava.gwt.lib.client.StorageControler;
+import com.akjava.gwt.lib.client.StorageException;
 import com.akjava.gwt.wiki.client.ui.AlertInput;
 import com.akjava.gwt.wiki.client.ui.AnchorInput;
 import com.akjava.gwt.wiki.client.ui.BtnInput;
@@ -47,7 +49,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class GWT_Wiki2012 implements EntryPoint {
-	StorageControler storageControler=new StorageControler();
+	IStorageControler storageControler=new StorageControler();
 	  private HTML htmlLabel;
 	  private TextArea textArea;
 	  private TextArea textHtmlArea;
@@ -322,7 +324,13 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        RootPanel.get().add(trueRoot);
 	        String data=RootPanel.get("text").getElement().getAttribute("value");
 	        textArea.setText(data);
-	        String historyText=storageControler.getValue("history", null);
+	        String historyText=null;
+			try {
+				historyText = storageControler.getValue("history", null);
+			} catch (StorageException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        if(historyText!=null){
 	        	textArea.setText(historyText);
 	        }
@@ -380,7 +388,12 @@ public class GWT_Wiki2012 implements EntryPoint {
 			}
 	     	  
 	     	  
-			storageControler.setValue("history", textArea.getText());
+			try {
+				storageControler.setValue("history", textArea.getText());
+			} catch (StorageException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	  	  
 	    }
 	    private void untag(){

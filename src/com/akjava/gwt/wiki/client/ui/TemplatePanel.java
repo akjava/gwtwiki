@@ -2,9 +2,9 @@ package com.akjava.gwt.wiki.client.ui;
 
 import java.util.List;
 
+import com.akjava.gwt.lib.client.HeaderAndValue;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.lib.client.StorageDataList;
-import com.akjava.gwt.lib.client.StorageDataList.HeaderAndValue;
 import com.github.gwtbootstrap.client.ui.Label;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
