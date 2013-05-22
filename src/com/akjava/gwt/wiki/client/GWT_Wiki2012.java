@@ -271,9 +271,12 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					
-					
+					int undoIndex=historyIndex-1;
+					if(undoIndex<0){
+						return;
+					}
 						
-					String text=textHistory.get(historyIndex);
+					String text=textHistory.get(undoIndex);
 					GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 					textArea.setText(text);
 					lastHistory=text;
@@ -288,7 +291,11 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					if(historyIndex<textHistory.size()){
-						String text=textHistory.get(historyIndex);
+						int redoIndex=historyIndex+1;
+						if(redoIndex>=textHistory.size()){
+							return;
+						}
+						String text=textHistory.get(redoIndex);
 						GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 						textArea.setText(text);
 						lastHistory=text;
