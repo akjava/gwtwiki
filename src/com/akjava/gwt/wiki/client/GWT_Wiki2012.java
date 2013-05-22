@@ -67,20 +67,26 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  private int historyIndex;
 	  private List<String> textHistory=new ArrayList<String>();
 	  
-	  private String defaultValueInputId;
-	  private String outputTextHiddenId;
-	  private String outputHtmlHiddenId;
+	 // private String defaultValueInputId;
+	 // private String outputTextHiddenId;
+	//  private String outputHtmlHiddenId;
+	  
+	  public static final String PEOPERTY_DEFAULT_ID="wiki2012defaultid";
+	  public static final String PEOPERTY_OUTPUT_TEXT="wiki2012outputtext";
+	  public static final String PEOPERTY_OUTPUT_HTML="wiki2012outputhtml";
 	  /**
 	     * This is the entry point method.
 	     */
 	    public void onModuleLoad() {
 	     //parse from html
 	    	LogUtils.log("onModuleLoad");
-	    	defaultValueInputId=ValueUtils.getFormValueById("wiki2012defaultid", "");
-	    	outputTextHiddenId=ValueUtils.getFormValueById("wiki2012outputtext", "");
-	    	outputHtmlHiddenId=ValueUtils.getFormValueById("wiki2012outputhtml", "");
+	    	/*
+	    	defaultValueInputId=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
+	    	outputTextHiddenId=ValueUtils.getFormValueById(PEOPERTY_OUTPUT_TEXT, "");
+	    	outputHtmlHiddenId=ValueUtils.getFormValueById(PEOPERTY_OUTPUT_HTML, "");
 	    	
 	    	LogUtils.log("inited:"+defaultValueInputId+","+outputTextHiddenId+","+outputHtmlHiddenId);
+	    	*/
 	  	  editData();
 	       
 	    }
@@ -249,7 +255,6 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        buttons2.add(untagBt);
 	        
-	        GWT.log("input:"+outputTextHiddenId);
 	        textArea = new TextArea();
 	        
 	        textArea.setName("textArea");
@@ -385,10 +390,10 @@ public class GWT_Wiki2012 implements EntryPoint {
 	       GWTHTMLUtils.getPanelIfExist("gwtwikicontainer").add(trueRoot);
 	        
 	        //load default value from input
-	        if(!defaultValueInputId.isEmpty()){
-	        String data=ValueUtils.getFormValueById(defaultValueInputId, "");
+	       // if(!defaultValueInputId.isEmpty()){
+	        String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
 	        textArea.setText(data);
-	        }
+	        //}
 	        
 	        
 	        /*
@@ -406,7 +411,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        */
 	        
 	        addHistory(textArea.getText());
-	        syncOutput();
+	        doWiki();
 	    }
 	    
 	    
@@ -424,12 +429,21 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    public void syncOutput(){
 	    	String text=textArea.getText();
 	    	String html=textHtmlArea.getText();
-	    	if(!outputTextHiddenId.isEmpty()){
-	    		RootPanel.get(outputTextHiddenId).getElement().setAttribute("value", text);
-	    	}
+	    	//if(!outputTextHiddenId.isEmpty()){
+	    		RootPanel panel=RootPanel.get(PEOPERTY_OUTPUT_TEXT);
+	    		if(panel!=null){
+	    			panel.getElement().setAttribute("value", text);
+	    		}
+	    		//RootPanel.get(outputTextHiddenId).getElement().setAttribute("value", text);
+	    	//}
+	    		RootPanel htmlpanel=RootPanel.get(PEOPERTY_OUTPUT_HTML);
+	    		if(htmlpanel!=null){
+	    			htmlpanel.getElement().setAttribute("value", html);
+	    		}
+	    		/*
 	    	if(!outputHtmlHiddenId.isEmpty()){
 	    		RootPanel.get(outputHtmlHiddenId).getElement().setAttribute("value", html);
-	    	}
+	    	}*/
 	    }
 	    
 	    public String convertWikiToHtml(){
