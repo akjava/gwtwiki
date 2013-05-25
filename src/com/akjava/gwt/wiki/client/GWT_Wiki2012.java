@@ -5,13 +5,11 @@ import java.util.List;
 
 import com.akjava.gwt.bootstrapwiki.client.BootstrapHtmlDocumentConverter;
 import com.akjava.gwt.lib.client.GWTHTMLUtils;
-import com.akjava.gwt.lib.client.GWTUtils;
 import com.akjava.gwt.lib.client.IStorageControler;
 import com.akjava.gwt.lib.client.LogUtils;
 import com.akjava.gwt.lib.client.StorageControler;
 import com.akjava.gwt.lib.client.StorageException;
 import com.akjava.gwt.lib.client.ValueUtils;
-import com.akjava.gwt.lib.client.widget.cell.util.WidgetUtils;
 import com.akjava.gwt.wiki.client.ui.AlertInput;
 import com.akjava.gwt.wiki.client.ui.AnchorInput;
 import com.akjava.gwt.wiki.client.ui.BtnInput;
@@ -25,7 +23,8 @@ import com.akjava.wiki.client.keyword.Keyword;
 import com.akjava.wiki.client.util.TagUtil;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.TextAreaElement;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -93,6 +92,16 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	
 	    	LogUtils.log("inited:"+defaultValueInputId+","+outputTextHiddenId+","+outputHtmlHiddenId);
 	    	*/
+	    
+	    	//now work
+	    	/*
+	    	Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+				@Override
+				public void execute() {
+					editData();
+				}
+			});
+			*/
 	  	  editData();
 	       
 	    }
@@ -465,6 +474,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        */
 	        
 	        addHistory(textArea.getText());
+	        //doWiki();
 	        doWiki();
 	    }
 	    
@@ -508,14 +518,19 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    }
 	    
 	    public String convertWikiToHtml(){
-	    	StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
-		  	 
+	    	//StringLineDocumentBuilder builder=new StringLineDocumentBuilder();
+	    	/*
+	    	 * converter first
+	    	 */
+	    	 BootstrapHtmlDocumentConverter converter=new BootstrapHtmlDocumentConverter();
+	    	 
 	     	  RootDocument document;
 			try {
-				document = builder.createDocument(StringLineDocumentBuilder.splitLine(textArea.getText()),"/test.html");
+				document = StringLineDocumentBuilder.createDocument(StringLineDocumentBuilder.splitLine(textArea.getText()),"/test.html");
 				String headerText="";
 		     	  String footerText="";
-		     	 BootstrapHtmlDocumentConverter converter=new BootstrapHtmlDocumentConverter();
+		     	
+		     	 
 		           converter.setHeaderText(headerText);
 		           converter.setFooterText(footerText);
 		           converter.setPrettyPrint(true);
@@ -529,6 +544,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 		           Keyword[] keywords={gwt};
 		          // KeyWordUtils.insertKeyword(document,keywords,null,new String[]{""});
 		           String result= converter.convert(document);
+		          
 		          // GWT.log(result, null);
 		           return result;
 		          
@@ -542,8 +558,11 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    }
 	    
 	    public void execWiki(){
+	    	
 	    	String result=convertWikiToHtml();
 	    	
+	    	System.out.println("input:"+textArea.getText());
+	    	System.out.println("result:"+result);
 	    	 htmlLabel.setHTML(result);
 	           
 		        
