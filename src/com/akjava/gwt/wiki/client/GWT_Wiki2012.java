@@ -57,7 +57,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class GWT_Wiki2012 implements EntryPoint {
-	IStorageControler storageControler=new StorageControler();
+	IStorageControler storageControler=new StorageControler(false);//use session storage
 	  private HTML htmlLabel;
 	  private TextArea textArea;
 	  private TextArea textHtmlArea;
