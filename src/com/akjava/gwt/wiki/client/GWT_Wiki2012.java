@@ -25,6 +25,7 @@ import com.github.gwtbootstrap.client.ui.Brand;
 import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.ButtonGroup;
 import com.github.gwtbootstrap.client.ui.ButtonToolbar;
+import com.github.gwtbootstrap.client.ui.NavLink;
 import com.github.gwtbootstrap.client.ui.Navbar;
 import com.github.gwtbootstrap.client.ui.TabPane;
 import com.github.gwtbootstrap.client.ui.TabPanel;
@@ -122,11 +123,14 @@ public class GWT_Wiki2012 implements EntryPoint {
 	      Brand b=new Brand("akjava GWTWiki");
 	      navbar.add(b);
 	      
+	      NavLink contact=new NavLink("Contact");
+	      contact.setHref("https://plus.google.com/103021856782435660635/about");
+	      //navbar.add(contact);
 	     
 	  	  HorizontalPanel trueRoot=new HorizontalPanel();
 	  	  trueRoot.setSpacing(16);
 	  	  
-	  	RootLayoutPanel.get().add(navbar);
+	  	  //RootLaytouPanel.get().add(navbar);
 	  	
 	  	  final FormPanel formPanel=new FormPanel();
 	  	  	
@@ -137,16 +141,6 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        formPanel.setAction("exec");
 	        trueRoot.add(formPanel);
 	        
-	        formPanel.addFormHandler(new FormHandler() {
-	            public void onSubmit(FormSubmitEvent event) {
-	            // GWT.log(event.getSource().toString(), null);
-	            }
-
-	            public void onSubmitComplete(FormSubmitCompleteEvent event) {
-	             Window.open("Main.html","_self",null);
-	              //Window.alert(event.getResults());
-	            }
-	          });
 
 	        
 	        
@@ -253,6 +247,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					insertBetweenSelectionText("<small>","</small>");
+					
 				}
 			});
 	        buttons2.add(smallBt);
@@ -277,7 +272,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 		    		
 		    		selection.setCursorPos(selection.getStart());
 		    		
-			    	
+		    		doWiki();
 				}
 			});
 	        buttons2.add(escape);
@@ -290,6 +285,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				@Override
 				public void onClick(ClickEvent event) {
 					untag();
+					doWiki();
 				}
 			});
 	       
@@ -427,7 +423,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 					if(historyIndex<0){
 						historyIndex=0;
 					}
-					
+					doWiki();
 				}
 			}));
 	        undoredoGroup.add(new Button("Redo", new ClickHandler() {
@@ -446,6 +442,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 						if(historyIndex>=textHistory.size()){
 							historyIndex=textHistory.size()-1;
 						}
+						doWiki();
 					}
 				}
 			}));
@@ -501,6 +498,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	       //tabPanel.add(frame,"Help");
 	      
 	       GWTHTMLUtils.getPanelIfExist("gwtwikicontainer").add(trueRoot);
+	      // GWTHTMLUtils.getPanelIfExist("gwtwikicontainer").add(trueRoot);
 	        
 	        //load default value from input
 	       // if(!defaultValueInputId.isEmpty()){
@@ -557,7 +555,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    private String lastWik;
 	    public void doWiki(){
-	    	if(!autoWiki.isActive()){
+	    	if(!autoWiki.isActive()){//checkbox,for slow platform to avoid slow multiple convert.
 	    		return;
 	    	}else{
 	    		execWiki();
@@ -691,6 +689,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 					String before=selection.getSelectionBefore()+header+selection.getSelection();
 					selection.setText(before+footer+selection.getSelectionAfter());
 					selection.setCursorPos(before.length());
+					doWiki();
 				}
 			});
 	        
@@ -726,6 +725,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  		
 	  		textArea.setCursorPos((h+header+realSelect).length());
 	  		textArea.setFocus(true);
+	  		doWiki();
 	    }
 	    
 	    public TextSelection getTextSelection(){
