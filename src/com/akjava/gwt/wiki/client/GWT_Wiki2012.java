@@ -21,10 +21,13 @@ import com.akjava.wiki.client.core.StringLineDocumentBuilder;
 import com.akjava.wiki.client.core.WikiException;
 import com.akjava.wiki.client.keyword.Keyword;
 import com.akjava.wiki.client.util.TagUtil;
-import com.github.gwtbootstrap.client.ui.NavTabs;
-import com.github.gwtbootstrap.client.ui.TabLink;
+import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.ButtonGroup;
+import com.github.gwtbootstrap.client.ui.ButtonToolbar;
 import com.github.gwtbootstrap.client.ui.TabPane;
 import com.github.gwtbootstrap.client.ui.TabPanel;
+import com.github.gwtbootstrap.client.ui.constants.ButtonType;
+import com.github.gwtbootstrap.client.ui.resources.ButtonSize;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
@@ -37,7 +40,6 @@ import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseOutEvent;
 import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.FormHandler;
@@ -138,11 +140,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 
 	        
 	        
-	        Button update = new Button("Push to Wiki2Html!", new ClickListener() {
-	            public void onClick(Widget sender) {
-	          	//doWiki(); 
-	            }
-	          });
+	      
 
 	        
 	        HorizontalPanel buttons=new HorizontalPanel();
@@ -209,6 +207,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        buttons.add(codeBt);
 	        
 	        Button boldBt=new Button("bold");
+	        boldBt.setSize(ButtonSize.SMALL);
 	        boldBt.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -345,7 +344,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	       
 	        htmlFolder.setHeight(htmlHeight);
 	        
-	        TabPane htmlTab=new TabPane("renderd-html");
+	        TabPane htmlTab=new TabPane("Renderd-html");
 	        htmlTab.add(htmlFolder);
 	        tabPanel.add(htmlTab);
 	        
@@ -372,11 +371,17 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        trueRoot.add(tabPanel);
 	        
 	        HorizontalPanel bottomButtons=new HorizontalPanel();
+	        bottomButtons.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
+	        
 	        if(readOnly){
 	        	bottomButtons.setVisible(false);
 	  	  	}
 	        verticalPanel.add(bottomButtons);
-	        bottomButtons.add(new Button("Clear", new ClickHandler() {
+	        
+	        ButtonToolbar bottomToolbar=new ButtonToolbar();
+	       
+	        bottomButtons.add(bottomToolbar);
+	        bottomToolbar.add(new Button("Clear", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					setTextArea(textArea,"");
@@ -384,7 +389,11 @@ public class GWT_Wiki2012 implements EntryPoint {
 					doWiki();
 				}
 			}));
-	        bottomButtons.add(new Button("Undo", new ClickHandler() {//TODO better
+	        
+	        ButtonGroup undoredoGroup=new ButtonGroup();
+	        bottomToolbar.add(undoredoGroup);
+	        
+	        undoredoGroup.add(new com.github.gwtbootstrap.client.ui.Button("Undo", new ClickHandler() {//TODO better
 				@Override
 				public void onClick(ClickEvent event) {
 					
@@ -404,7 +413,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 					
 				}
 			}));
-	        bottomButtons.add(new Button("Redo", new ClickHandler() {
+	        undoredoGroup.add(new Button("Redo", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					if(historyIndex<textHistory.size()){
@@ -424,18 +433,35 @@ public class GWT_Wiki2012 implements EntryPoint {
 				}
 			}));
 	        
-	        autoWiki = new CheckBox();
-	        bottomButtons.add(autoWiki);
-	        autoWiki.setValue(true);
-	        bottomButtons.add(new Label("Auto wiki"));
+	        ButtonGroup checkGroup=new ButtonGroup();
+	        checkGroup.setToggle("checkbox");
+	        bottomToolbar.add(checkGroup);
 	        
-	        bottomButtons.add(new Button("Manual Wiki",new ClickHandler() {
+	        autoWiki=new Button("Auto");
+	        autoWiki.setType(ButtonType.INFO);
+	        checkGroup.add(autoWiki);
+	        Button manual=new Button("Manual");
+	       // checkGroup.add(manual);
+	        autoWiki.setActive(true);
+	        
+	        //autoWiki = new com.github.gwtbootstrap.client.ui.CheckBox("Auto Convert");
+	        //bottomToolbar.add(autoWiki);
+	        //bottomButtons.add(autoWiki);
+	        autoWiki.setActive(true);
+	        
+	       // autoWiki.setValue(true);
+	        //bottomButtons.add(new Label("Auto wiki"));
+	        
+	        
+	        Button convert=new Button("Convert wiki to Html",new ClickHandler() {
 				
 				@Override
 				public void onClick(ClickEvent event) {
 					execWiki();
 				}
-			}));
+			});
+	        convert.setType(ButtonType.INFO);
+	        bottomButtons.add(convert);
 	      
 	        
 	        
@@ -514,7 +540,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    private String lastWik;
 	    public void doWiki(){
-	    	if(!autoWiki.getValue()){
+	    	if(!autoWiki.isActive()){
 	    		return;
 	    	}else{
 	    		execWiki();
@@ -763,7 +789,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    }
 	    
 	    private String lastHistory;
-		private CheckBox autoWiki;
+		private Button autoWiki;
 	    public void addHistory(String text){
 	    	if(text.equals(lastHistory)){
 	    		return;
