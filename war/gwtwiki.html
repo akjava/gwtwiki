@@ -35,8 +35,52 @@
   <!-- OPTIONAL: include this if you want history support -->
     <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
     
-<input type="hidden" id="wiki2012defaultid" value="*hello world
-this is initial line in html file."/>
+<input type="hidden" id="wiki2012defaultid" value="
+[[headers]]
+*Header1
+**Header2
+header2 is always with hero unit.
+***what is this.
+*
+to cancel hero insert empty 
+***Header3
+***header4
+#title(title)
+#title(title,small)
+this type title has small.
+
+[[text]]
+#code
+converted to pre
+line2
+#text
+<code>code text</code>
+<small>small text</small>
+''bold'' is wiki style
+
+http://google.com
+https://www.java.com
+link automatic convert
+#tag
+<hr/>
+#text
+
+[[buttons]]
+to create button select text and choose type and size and push Btn
+<btn href='http://aaa' primary large>hello</btn>
+
+[[progress]]
+just select progress.or manually input persent ,width-pixlel and type.
+#progress(25%)
+#progress(25%,100)
+#progress(25%,200,danger)
+
+[[layout]]
+only support pull-right
+#div(pull-right)
+hello world
+#text
+"/>
 <div id="gwtwikicontainer"></div>
 
 

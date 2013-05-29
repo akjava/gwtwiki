@@ -21,9 +21,11 @@ import com.akjava.wiki.client.core.StringLineDocumentBuilder;
 import com.akjava.wiki.client.core.WikiException;
 import com.akjava.wiki.client.keyword.Keyword;
 import com.akjava.wiki.client.util.TagUtil;
+import com.github.gwtbootstrap.client.ui.Brand;
 import com.github.gwtbootstrap.client.ui.Button;
 import com.github.gwtbootstrap.client.ui.ButtonGroup;
 import com.github.gwtbootstrap.client.ui.ButtonToolbar;
+import com.github.gwtbootstrap.client.ui.Navbar;
 import com.github.gwtbootstrap.client.ui.TabPane;
 import com.github.gwtbootstrap.client.ui.TabPanel;
 import com.github.gwtbootstrap.client.ui.constants.ButtonType;
@@ -50,6 +52,7 @@ import com.google.gwt.user.client.ui.Frame;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextArea;
@@ -115,8 +118,15 @@ public class GWT_Wiki2012 implements EntryPoint {
 	      if(panel!=null){
 	    	  readOnly=true;
 	      }
+	      Navbar navbar=new Navbar();
+	      Brand b=new Brand("akjava GWTWiki");
+	      navbar.add(b);
+	      
+	     
 	  	  HorizontalPanel trueRoot=new HorizontalPanel();
 	  	  trueRoot.setSpacing(16);
+	  	  
+	  	RootLayoutPanel.get().add(navbar);
 	  	
 	  	  final FormPanel formPanel=new FormPanel();
 	  	  	
@@ -341,7 +351,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        //tabPanel.getDeckPanel().setWidth("960px");
 	       
 	        htmlWidget = new HTML();
-	        htmlWidget.setWidth(htmlWidth);
+	        htmlWidget.setWidth("920px");
 	        
 	        htmlFolder = new ScrollPanel(htmlWidget);
 	      
@@ -385,14 +395,17 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        ButtonToolbar bottomToolbar=new ButtonToolbar();
 	       
 	        bottomButtons.add(bottomToolbar);
-	        bottomToolbar.add(new Button("Clear", new ClickHandler() {
+	        Button clear=
+	        new Button("Clear", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
 					setTextArea(textArea,"");
 					
 					doWiki();
 				}
-			}));
+			});
+	       clear.setType(ButtonType.DANGER);
+	        bottomToolbar.add(clear);
 	        
 	        ButtonGroup undoredoGroup=new ButtonGroup();
 	        bottomToolbar.add(undoredoGroup);

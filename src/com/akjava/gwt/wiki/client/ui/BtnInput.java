@@ -17,7 +17,7 @@ TextInsertTarget target;
 		
 		
 		final ListBox list=new ListBox();
-		list.setWidth("80px");
+		list.setWidth("90px");
 		list.addItem("bt-type");
 		list.addItem("primary");
 		list.addItem("info");
