@@ -1,19 +1,21 @@
 package com.akjava.gwt.wiki.client.ui;
 
 import com.akjava.gwt.wiki.client.TextInsertTarget;
+import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.DropdownButton;
 import com.github.gwtbootstrap.client.ui.ListBox;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
+import com.github.gwtbootstrap.client.ui.resources.ButtonSize;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class BtnInput extends HorizontalPanel{
 TextInsertTarget target;
 	public BtnInput(TextInsertTarget ta){
 		this.target=ta;
+		
+		
 		final ListBox list=new ListBox();
 		list.setWidth("80px");
 		list.addItem("bt-type");
@@ -28,7 +30,7 @@ TextInsertTarget target;
 		add(list);
 		
 		final ListBox size=new ListBox();
-		size.setWidth("80px");
+		size.setWidth("90px");
 		size.addItem("bt-size");
 		size.addItem("large");
 		size.addItem("small");
@@ -37,7 +39,7 @@ TextInsertTarget target;
 		add(size);
 		
 		final ListBox plus=new ListBox();
-		plus.setWidth("80px");
+		plus.setWidth("90px");
 		plus.addItem("plus-txt");
 		plus.addItem("space>>"," &raquo;");
 		plus.addItem(">>","&raquo;");
@@ -69,6 +71,7 @@ TextInsertTarget target;
 			}
 		});
 		add(bt);
+		bt.setSize(ButtonSize.SMALL);
 		
 		
 		}

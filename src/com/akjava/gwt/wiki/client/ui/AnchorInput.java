@@ -1,12 +1,11 @@
 package com.akjava.gwt.wiki.client.ui;
 
 import com.akjava.gwt.wiki.client.TextInsertTarget;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
+import com.github.gwtbootstrap.client.ui.Button;
+import com.github.gwtbootstrap.client.ui.resources.ButtonSize;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 
 public class AnchorInput extends HorizontalPanel{
@@ -24,7 +23,7 @@ TextInsertTarget target;
 			}
 		});
 		add(bt);
-		
+		 bt.setSize(ButtonSize.SMALL);
 		
 		}
 	

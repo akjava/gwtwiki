@@ -197,6 +197,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        verticalPanel.add(buttons);
 	        
 	        Button codeBt=new Button("code");
+	        codeBt.setSize(ButtonSize.SMALL);
 	        codeBt.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -236,6 +237,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        verticalPanel.add(buttons2);
 	        
 	        Button smallBt=new Button("small");
+	        smallBt.setSize(ButtonSize.SMALL);
 	        smallBt.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -246,6 +248,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        buttons2.add(smallBt);
 	        
 	        Button escape=new Button("&escape");
+	        escape.setSize(ButtonSize.SMALL);
 	        escape.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -271,6 +274,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        buttons2.add(new BtnInput(target));
 	        
 	        Button untagBt=new Button("untag");
+	        untagBt.setSize(ButtonSize.SMALL);
 	        untagBt.addClickHandler(new ClickHandler() {
 				
 				@Override
@@ -663,6 +667,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    private Button insertTextButton(final String header,final String footer){
 	        final Button tagButton=new Button();
+	        tagButton.setSize(ButtonSize.SMALL);
 	       // tagButton.setWidth("80px");
 	        tagButton.setText(header);
 	        tagButton.addClickHandler(new ClickHandler() {
