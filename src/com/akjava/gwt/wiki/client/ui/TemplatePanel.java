@@ -55,6 +55,8 @@ public class TemplatePanel extends HorizontalPanel {
 		});
 		controler.add(bt);
 		controler.add(newBt);
+		
+		//inputText = new TextA
 		inputText = new TextArea();
 		inputText.setSize("600px", "600px");
 		main.add(inputText);
@@ -62,6 +64,8 @@ public class TemplatePanel extends HorizontalPanel {
 		list.add(templateList);
 		
 		updateList();
+		
+		
 	}
 	
 	

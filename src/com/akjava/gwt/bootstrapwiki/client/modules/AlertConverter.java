@@ -1,6 +1,6 @@
 package com.akjava.gwt.bootstrapwiki.client.modules;
 
-import org.apache.commons.beanutils.Converter;
+//import org.apache.commons.beanutils.Converter;
 
 import com.akjava.wiki.client.core.Node;
 import com.akjava.wiki.client.htmlconverter.AbstractConverter;

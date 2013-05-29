@@ -21,10 +21,12 @@ import com.akjava.wiki.client.core.StringLineDocumentBuilder;
 import com.akjava.wiki.client.core.WikiException;
 import com.akjava.wiki.client.keyword.Keyword;
 import com.akjava.wiki.client.util.TagUtil;
+import com.github.gwtbootstrap.client.ui.NavTabs;
+import com.github.gwtbootstrap.client.ui.TabLink;
+import com.github.gwtbootstrap.client.ui.TabPane;
+import com.github.gwtbootstrap.client.ui.TabPanel;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -48,7 +50,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -58,7 +59,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class GWT_Wiki2012 implements EntryPoint {
 	IStorageControler storageControler=new StorageControler(false);//use session storage
-	  private HTML htmlLabel;
+	  private HTML htmlWidget;
 	  private TextArea textArea;
 	  private TextArea textHtmlArea;
 	  private ScrollPanel htmlFolder;
@@ -320,33 +321,53 @@ public class GWT_Wiki2012 implements EntryPoint {
 			});
 	        verticalPanel.add(textArea);
 	        
-	        TabPanel tabPanel = new TabPanel();
+	       // TabPanel tabPanel = new TabPanel();
+	        TabPanel tabPanel=new TabPanel();
 	        
-	       
+	        String htmlHeight="700px";
+	        String htmlWidth="960px";
+	        tabPanel.setWidth(htmlWidth);
 	        if(readOnly){
-	        	tabPanel.getDeckPanel().setHeight("670px");	
+	        	  tabPanel.setHeight("670px");
+	        	//tabPanel.getDeckPanel().setHeight("670px");	
 	        }else{
-	        tabPanel.getDeckPanel().setHeight("730px");
+	        	 tabPanel.setHeight("760px");
+	        //tabPanel.getDeckPanel().setHeight("730px");
 	        }
-	        tabPanel.getDeckPanel().setWidth("960px");
+	        //tabPanel.setHeight("1160px");
+	        //tabPanel.getDeckPanel().setWidth("960px");
 	       
-	        htmlLabel = new HTML();
+	        htmlWidget = new HTML();
+	        htmlWidget.setWidth(htmlWidth);
 	        
-	        htmlFolder = new ScrollPanel(htmlLabel);
+	        htmlFolder = new ScrollPanel(htmlWidget);
 	      
 	       
-	        htmlFolder.setHeight("700px");
+	        htmlFolder.setHeight(htmlHeight);
 	        
-	  	  tabPanel.add(htmlFolder,"renderd-html");
+	        TabPane htmlTab=new TabPane("renderd-html");
+	        htmlTab.add(htmlFolder);
+	        tabPanel.add(htmlTab);
+	        
+	        //link.add(htmlFolder,"renderd-html");
 	  	
 	  	  if(!readOnly){
-	  	  tabPanel.add(new TemplatePanel(),"template");
+	  		  TabPane templateTab=new TabPane("Template");
+	  		  templateTab.setHeight(htmlHeight);
+	  		  templateTab.add(new TemplatePanel());
+	  		  tabPanel.add(templateTab);
+	  	 // tabPanel.add(new TemplatePanel(),"template");
 	  	  }
 	       
 	        textHtmlArea = new TextArea();
+	        textHtmlArea.setSize("90%", "90%");
 	        //textHtmlArea.setWidth("300px");
 	        
-	        tabPanel.add(textHtmlArea,"text-html");
+	        TabPane textHtml=new TabPane("Text-Html");
+	        textHtml.setHeight(htmlHeight);
+	        textHtml.add(textHtmlArea);
+	        tabPanel.add(textHtml);
+	        
 	        tabPanel.selectTab(0);
 	        trueRoot.add(tabPanel);
 	        
@@ -419,11 +440,22 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        
 	        
 	       
-	       Frame frame=new Frame("manual.html");
-	      
-	       frame.setHeight("640x");
+	       VerticalPanel dummy=new VerticalPanel();
+	       dummy.setWidth(htmlWidth);
+	       dummy.setHeight(htmlHeight);
+	       Frame helpHtmlFrame=new Frame("manual.html");
+	       
+	       dummy.add(helpHtmlFrame);
+	       
+	       helpHtmlFrame.setWidth("800x");
 	      // trueRoot.add(frame);
-	       tabPanel.add(frame,"Help");
+	        TabPane helpPane=new TabPane("Help");
+	        helpPane.setWidth(htmlWidth);
+	        helpPane.setHeight(htmlHeight);
+	        helpPane.add(dummy);
+	        
+	       // tabPanel.add(helpPane);
+	       //tabPanel.add(frame,"Help");
 	      
 	       GWTHTMLUtils.getPanelIfExist("gwtwikicontainer").add(trueRoot);
 	        
@@ -563,7 +595,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	
 	    	System.out.println("input:"+textArea.getText());
 	    	System.out.println("result:"+result);
-	    	 htmlLabel.setHTML(result);
+	    	 htmlWidget.setHTML(result);
 	           
 		        
 	          // htmlFolder.add(htmlLabel);
