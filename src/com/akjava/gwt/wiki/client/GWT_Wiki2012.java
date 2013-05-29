@@ -170,6 +170,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 			  TextInsertTarget justInsertTarget=new TextInsertTarget() {
 					@Override
 					public void insertText(String header) {
+						LogUtils.log("inserted by p");
 						TextSelection selection=getTextSelection();
 						String before=selection.getSelectionBefore()+header+selection.getSelection();
 						selection.setText(before+selection.getSelectionAfter());
@@ -631,8 +632,6 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	
 	    	String result=convertWikiToHtml();
 	    	
-	    	System.out.println("input:"+textArea.getText());
-	    	System.out.println("result:"+result);
 	    	 htmlWidget.setHTML(result);
 	           
 		        
@@ -694,6 +693,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    }
 	    
 	    private void insertBetweenSelectionText(String header,String footer){
+	    	
 	  	 // dosubmit=false;
 	  		try{
 	  		if(textArea.getSelectedText()==null || textArea.getSelectedText().equals("")){
