@@ -303,9 +303,14 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        textArea.addKeyUpHandler(new KeyUpHandler() {
 				@Override
 				public void onKeyUp(KeyUpEvent event) {
+					
 					if(event.getNativeKeyCode()==KeyCodes.KEY_ENTER){
 					doWiki();	
-					}else{
+					}
+					else if(event.isControlKeyDown()){
+						doWiki();	
+					}
+					else{
 					convertWikiToHtml();//not need?
 					syncOutput();
 					}
