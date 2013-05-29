@@ -174,7 +174,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 						TextSelection selection=getTextSelection();
 						String before=selection.getSelectionBefore()+header+selection.getSelection();
 						selection.setText(before+selection.getSelectionAfter());
-						selection.setCursorPos(before.length()+header.length());
+						selection.setCursorPos(before.length());
 						doWiki();
 					}
 
@@ -727,7 +727,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    
 	    public TextSelection getTextSelection(){
 	    	try{
-	    		GWT.log("selection:"+textArea.getSelectedText());
+	    		//GWT.log("selection:"+textArea.getSelectedText());
 		  		if(textArea.getSelectedText()==null ){
 		  			return null;
 		  		}}catch(Exception e){
@@ -811,7 +811,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	    	}
 	    	textHistory.add(text);
 	    	lastHistory=text;
-	    	GWT.log("add history:"+text);
+	    	//GWT.log("add history:"+text);
 	    	if(textHistory.size()>1000){
 	    		textHistory.remove(0);
 	    	}
