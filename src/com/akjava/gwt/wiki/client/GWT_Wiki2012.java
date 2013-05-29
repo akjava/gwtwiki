@@ -119,12 +119,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	      if(panel!=null){
 	    	  readOnly=true;
 	      }
-	      Navbar navbar=new Navbar();
-	      Brand b=new Brand("akjava GWTWiki");
-	      navbar.add(b);
-	      
-	      NavLink contact=new NavLink("Contact");
-	      contact.setHref("https://plus.google.com/103021856782435660635/about");
+	     
 	      //navbar.add(contact);
 	     
 	  	  HorizontalPanel trueRoot=new HorizontalPanel();
