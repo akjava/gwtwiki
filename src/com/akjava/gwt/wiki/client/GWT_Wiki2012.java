@@ -163,6 +163,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 					String before=selection.getSelectionBefore()+header+selection.getSelection();
 					selection.setText(before+footer+selection.getSelectionAfter());
 					selection.setCursorPos(before.length());
+					doWiki();
 				}
 			};
 			
@@ -173,6 +174,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 						String before=selection.getSelectionBefore()+header+selection.getSelection();
 						selection.setText(before+selection.getSelectionAfter());
 						selection.setCursorPos(before.length()+header.length());
+						doWiki();
 					}
 
 					@Override
