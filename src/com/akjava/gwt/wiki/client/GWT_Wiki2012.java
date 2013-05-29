@@ -118,6 +118,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	      RootPanel panel=RootPanel.get(PEOPERTY_READ_ONLY);
 	      if(panel!=null){
 	    	  readOnly=true;
+	    	  GWT.log("gwtwiki:readonly-mode");
 	      }
 	     
 	      //navbar.add(contact);
@@ -170,7 +171,6 @@ public class GWT_Wiki2012 implements EntryPoint {
 			  TextInsertTarget justInsertTarget=new TextInsertTarget() {
 					@Override
 					public void insertText(String header) {
-						LogUtils.log("inserted by p");
 						TextSelection selection=getTextSelection();
 						String before=selection.getSelectionBefore()+header+selection.getSelection();
 						selection.setText(before+selection.getSelectionAfter());
@@ -457,8 +457,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        autoWiki=new Button("Auto");
 	        autoWiki.setType(ButtonType.INFO);
 	        checkGroup.add(autoWiki);
-	        Button manual=new Button("Manual");
-	       // checkGroup.add(manual);
+	         // checkGroup.add(manual);
 	        autoWiki.setActive(true);
 	        
 	        //autoWiki = new com.github.gwtbootstrap.client.ui.CheckBox("Auto Convert");
@@ -510,12 +509,15 @@ public class GWT_Wiki2012 implements EntryPoint {
 	        if(!session_id.isEmpty()){
 	        	try {
 	        		String lastSessionId = storageControler.getValue(KEY_LAST_SESSION_ID, "");
-	        		if(session_id!=lastSessionId){
+	        		GWT.log("gwtwiki:lastSessionId="+lastSessionId+",session_id="+session_id);
+	        		if(!session_id.equals(lastSessionId)){
 	        			//new situation
+	        			GWT.log("gwtwiki:different session id,get initial value from PEOPERTY_DEFAULT_ID");
 	        			String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
 	    		        textArea.setText(data);
 	    		        storageControler.setValue(KEY_LAST_SESSION_ID, session_id);//mark used
 	        		}else{
+	        			GWT.log("gwtwiki:use last modified value");
 	        			String lastModified=storageControler.getValue(KEY_SESSION, "");
 	        			textArea.setText(lastModified);
 	        		}
@@ -525,6 +527,7 @@ public class GWT_Wiki2012 implements EntryPoint {
 				}
 	        	
 	        }else{
+	        	GWT.log("gwtwiki:no session id,get initial value from PEOPERTY_DEFAULT_ID");
 	        	String data=ValueUtils.getFormValueById(PEOPERTY_DEFAULT_ID, "");
 		        textArea.setText(data);
 	        }
