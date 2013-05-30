@@ -10,4 +10,4 @@ wiki2012outputtext - for output text value
 wiki2012outputhtml  - for output converted html value
 
 example 
-see test_form.html
+see test_form.html (some case totally not work)
