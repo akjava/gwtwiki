@@ -128,14 +128,18 @@ public class GWT_Wiki2012 implements EntryPoint {
 	  	  
 	  	  //RootLaytouPanel.get().add(navbar);
 	  	
+	  	VerticalPanel verticalPanel=new VerticalPanel();
+	  	trueRoot.add(verticalPanel);
+	  	  /*
 	  	  final FormPanel formPanel=new FormPanel();
 	  	  	
 	  	  
-	        VerticalPanel verticalPanel=new VerticalPanel();
+	        
 	        formPanel.setWidget(verticalPanel);
 	        formPanel.setMethod("post");
 	        formPanel.setAction("exec");
 	        trueRoot.add(formPanel);
+	        */
 	        
 
 	        
