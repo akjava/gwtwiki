@@ -75,23 +75,7 @@ public class WikiWidget extends HorizontalPanel{
 		this.readOnly=readOnly;
 		VerticalPanel verticalPanel=new VerticalPanel();
 	  	this.add(verticalPanel);
-	  	  /*
-	  	  final FormPanel formPanel=new FormPanel();
-	  	  	
 	  	  
-	        
-	        formPanel.setWidget(verticalPanel);
-	        formPanel.setMethod("post");
-	        formPanel.setAction("exec");
-	        trueRoot.add(formPanel);
-	        */
-	        
-
-	        
-	        
-	      
-
-	        
 	        HorizontalPanel buttons=new HorizontalPanel();
 	        if(readOnly){
 	        	buttons.setVisible(false);
@@ -506,6 +490,11 @@ public class WikiWidget extends HorizontalPanel{
 	        //doWiki();
 	        doWiki();
 	}
+	
+	public boolean isReadOnly(){
+		return readOnly;
+	}
+	
 	//create from html
 	public static WikiWidget createWikiWidgetByHtml(){
 		boolean readOnly=false;

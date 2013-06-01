@@ -64,28 +64,7 @@ import com.google.gwt.user.client.ui.Widget;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class GWT_Wiki2012 implements EntryPoint {
-	IStorageControler storageControler=new StorageControler(false);//use session storage
-	  private HTML htmlWidget;
-	  private TextArea textArea;
-	  private TextArea textHtmlArea;
-	  private ScrollPanel htmlFolder;
-	  
-	  private int historyIndex;
-	  private List<String> textHistory=new ArrayList<String>();
-	  
-	 // private String defaultValueInputId;
-	 // private String outputTextHiddenId;
-	//  private String outputHtmlHiddenId;
-	  
-	  public static final String PEOPERTY_READ_ONLY="wiki2012readonly";
-	  public static final String PEOPERTY_SESSION_ID="wiki2012sessionid";
-	  
-	  public static final String PEOPERTY_DEFAULT_ID="wiki2012defaultid";
-	  public static final String PEOPERTY_OUTPUT_TEXT="wiki2012outputtext";
-	  public static final String PEOPERTY_OUTPUT_HTML="wiki2012outputhtml";
-	  
-	  public static final String KEY_SESSION="wiki2012session_value";//for session storage
-	  public static final String KEY_LAST_SESSION_ID="wiki2012session_last_session_id";
+
 	  /**
 	     * This is the entry point method.
 	     */
