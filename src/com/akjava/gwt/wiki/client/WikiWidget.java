@@ -70,9 +70,11 @@ public class WikiWidget extends HorizontalPanel{
 	  public static final String KEY_SESSION="wiki2012session_value";//for session storage
 	  public static final String KEY_LAST_SESSION_ID="wiki2012session_last_session_id";
 	
-	//create by manual  
-	public WikiWidget(boolean readOnly,String session_id,String defaultValue){
+	//create by manual 
+	private String defaultValue;
+	public WikiWidget(boolean readOnly,String session_id,String defaultValue2){
 		this.readOnly=readOnly;
+		this.defaultValue=defaultValue2;
 		VerticalPanel verticalPanel=new VerticalPanel();
 	  	this.add(verticalPanel);
 	  	  
@@ -331,7 +333,7 @@ public class WikiWidget extends HorizontalPanel{
 	        new Button("Reset", new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					setTextArea(textArea,"");
+					setTextArea(textArea,defaultValue);
 					
 					doWiki();
 				}
@@ -352,7 +354,6 @@ public class WikiWidget extends HorizontalPanel{
 					}
 						
 					String text=textHistory.get(undoIndex);
-					GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 					textArea.setText(text);
 					lastHistory=text;
 					historyIndex--;
@@ -371,7 +372,6 @@ public class WikiWidget extends HorizontalPanel{
 							return;
 						}
 						String text=textHistory.get(redoIndex);
-						GWT.log("size:"+textHistory.size()+",index="+historyIndex+",text="+text);
 						textArea.setText(text);
 						lastHistory=text;
 						historyIndex++;
