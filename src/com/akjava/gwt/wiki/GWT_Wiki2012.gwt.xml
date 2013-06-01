@@ -12,9 +12,11 @@
 	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
 	<!-- Other module inherits                                      -->
-	<inherits name='com.github.gwtbootstrap.Bootstrap' />
+	<inherits name='com.github.gwtbootstrap.BootstrapNoResources' />
 	<set-property name="bootstrap.responsiveDesign" value="true" />
 	<inherits name="com.akjava.gwt.lib.Commons" />
+	
+		<stylesheet src='css/gwt-bootstrap.css'/>
 	<!-- Specify the app entry point class.                         -->
 	<entry-point class='com.akjava.gwt.wiki.client.GWT_Wiki2012' />
 
