@@ -418,7 +418,7 @@ public class WikiWidget extends HorizontalPanel{
 	       VerticalPanel dummy=new VerticalPanel();
 	       dummy.setWidth(htmlWidth);
 	       dummy.setHeight(htmlHeight);
-	       Frame helpHtmlFrame=new Frame("manual.html");
+	       Frame helpHtmlFrame=new Frame("wiki_manual.html");
 	       
 	       dummy.add(helpHtmlFrame);
 	       
